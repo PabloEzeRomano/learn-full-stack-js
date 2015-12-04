@@ -1,5 +1,5 @@
 # learn-full-stack-js
-Learning Full Stack Development with JavaScript ES6
+Learning Full Stack Web Development with JavaScript ES6
 
 ### Tech to learn
 
