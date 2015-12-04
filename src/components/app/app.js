@@ -1,9 +1,14 @@
 'use strict';
 
 export default ngModule => {
-  ngModule.directive('lnApp',function () {
 
-    require('./.styl');
+  if (ON_TEST) {
+    require('./app.test')(ngModule);
+  }
+
+  ngModule.directive('lrnApp',function () {
+
+    require('./app.styl');
 
     return {
       restrict      : 'E',
@@ -16,6 +21,8 @@ export default ngModule => {
       },
       link : {
         post : function postLink (scope, element, attributes) {
+
+          console.log('It\'s Muffin Time!');
 
         }
       }

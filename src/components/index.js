@@ -1,5 +1,7 @@
 'use strict';
 
+import app from './app/app';
+
 export default ngModule => {
-  require('./app')(ngModule);
+  app(ngModule);
 };
