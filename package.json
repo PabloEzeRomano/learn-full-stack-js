@@ -1,0 +1,22 @@
+{
+  "name": "learn-full-stack-js",
+  "version": "0.0.1",
+  "description": "Learning Full Stack Development with JavaScript ES6",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/L3V147H4N/learn-full-stack-js.git"
+  },
+  "keywords": [
+
+  ],
+  "author": "Gabriel Matusevich <gamatusevich@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/L3V147H4N/learn-full-stack-js/issues"
+  },
+  "homepage": "https://github.com/L3V147H4N/learn-full-stack-js#readme"
+}
