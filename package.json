@@ -2,7 +2,7 @@
   "name": "learn-full-stack-js",
   "version": "0.0.1",
   "description": "Learning Full Stack Development with JavaScript ES6",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "dev"     : "node node_modules/.bin/webpack-dev-server --content-base src",
     "bundle"  : "mkdir -p public && cp src/index.html public/ && webpack --progress --colors --watch",
