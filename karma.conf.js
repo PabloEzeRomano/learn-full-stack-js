@@ -28,9 +28,7 @@ module.exports = function(config) {
       entry
     ],
 
-    webpack : {
-      module : webpackConfig.module
-    },
+    webpack : webpackConfig,
 
 
     // list of files to exclude

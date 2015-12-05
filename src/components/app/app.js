@@ -1,9 +1,11 @@
 'use strict';
 
+import test from './app.test';
+
 export default ngModule => {
 
   if (ON_TEST) {
-    require('./app.test')(ngModule);
+    test(ngModule);
   }
 
   ngModule.directive('lrnApp',function () {
