@@ -4,7 +4,14 @@ const
   path    = require('path'),
   webpack = require('webpack');
 
-module.exports = {
+const
+  babelPresets = {
+    presets : [
+      'es2015'
+    ]
+  };
+
+var config = {
   context : __dirname + '/src',
   entry   : './index.js',
   output  : {
@@ -22,15 +29,10 @@ module.exports = {
     loaders : [
       {
         test : /\.js$/,
-        loader : 'babel',
+        loader : 'ng-annotate!babel?' + JSON.stringify(babelPresets),
         include : [
           path.resolve(__dirname, 'src')
-        ],
-        query : {
-          presets : [
-            'es2015'
-          ]
-        }
+        ]
       },
       { test : /\.html$/, loader : 'raw', include : [ path.resolve(__dirname, 'src')] },
       { test : /\.css$/, loader : 'style!css' },
@@ -39,3 +41,11 @@ module.exports = {
     ]
   }
 };
+
+config.devtool = 'source-map'
+
+if (process.env.NODE_ENV === 'production') {
+  config.plugins.push(new webpack.optimize.UglifyJsPlugin());
+}
+
+module.exports = config;
