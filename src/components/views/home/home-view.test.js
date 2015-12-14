@@ -1,9 +1,9 @@
 'use strict';
 
 export default ngModule => {
-  describe(`grv-app`, () => {
+  describe(`home-view`, () => {
     beforeEach(window.module(ngModule.name));
-    it(`should test grv-app`, () => {
+    it(`should test home-view`, () => {
       expect(true).to.be.true;
     });
 

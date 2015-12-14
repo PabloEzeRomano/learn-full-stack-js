@@ -1,9 +1,9 @@
 'use strict';
 
-import controller  from './app-controller';
-import template    from './app.html';
-import style       from './app.styl';
-import test        from './app.test';
+import controller  from './home-view-controller';
+import template    from './home-view.html';
+import style       from './home-view.styl';
+import test        from './home-view.test';
 
 export default ngModule => {
 
@@ -11,14 +11,14 @@ export default ngModule => {
     test(ngModule);
   }
 
-  ngModule.directive('lrnApp',function () {
+  ngModule.directive('homeView',function () {
 
     return {
       restrict      : 'E',
       scope         : {},
       replace       : true,
       template      : template,
-      controllerAs  : 'app',
+      controllerAs  : 'home',
       controller    : controller,
       link : {
         post : function postLink (scope, element, attributes) {

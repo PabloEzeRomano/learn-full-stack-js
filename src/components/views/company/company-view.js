@@ -1,9 +1,9 @@
 'use strict';
 
-import controller  from './app-controller';
-import template    from './app.html';
-import style       from './app.styl';
-import test        from './app.test';
+import controller  from './company-view-controller';
+import template    from './company-view.html';
+import style       from './company-view.styl';
+import test        from './company-view.test';
 
 export default ngModule => {
 
@@ -11,14 +11,14 @@ export default ngModule => {
     test(ngModule);
   }
 
-  ngModule.directive('lrnApp',function () {
+  ngModule.directive('companyView',function () {
 
     return {
       restrict      : 'E',
       scope         : {},
       replace       : true,
       template      : template,
-      controllerAs  : 'app',
+      controllerAs  : 'company',
       controller    : controller,
       link : {
         post : function postLink (scope, element, attributes) {
@@ -29,3 +29,4 @@ export default ngModule => {
 
   });
 };
+

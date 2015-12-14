@@ -1,0 +1,10 @@
+<div class="list-group">
+  <h3>Favoritos</h3>
+  <a class="list-group-item" ng-repeat="fav in favorites">
+    <h4 class="list-group-item-heading">{{fav.description}}</h4>
+    <p class="list-group-item-text">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores consectetur consequuntur deserunt doloremque ducimus eligendi esse ex, illum incidunt itaque minima non quam ratione rem repudiandae, saepe sapiente sequi totam?
+    </p>
+    <span class="label label-info">{{fav.price | currency}}</span>
+  </a>
+</div>

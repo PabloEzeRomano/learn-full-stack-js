@@ -1,0 +1,46 @@
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-md-8">
+
+      <table class="table table-condensed table-striped">
+        <thead>
+          <th>Name</th>
+          <th>Lastname</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="client in home.clients">
+            <td ng-click="home.selectClient(client)">{{client.name}}</td>
+            <td>{{client.lastname}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="col-md-4">
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4>Selected Client</h4>
+        </div>
+        <div class="panel-body">
+          <p>{{home.selectedClient.name}}</p>
+          <p><b>{{home.selectedClient.lastname.toUpperCase()}}</b></p>
+        </div>
+        <div class="panel-footer">
+          <button class="btn btn-primary">
+            Awesome
+          </button>
+          <button class="btn btn-danger">
+            Not Awesome
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

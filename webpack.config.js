@@ -20,6 +20,11 @@ var config = {
   },
 
   plugins : [
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      moment : "moment"
+    }),
     new webpack.DefinePlugin({
       ON_TEST : process.env.NODE_ENV === 'test'
     })
