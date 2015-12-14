@@ -1,0 +1,52 @@
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-md-8">
+
+      <table class="table table-condensed table-striped">
+        <thead>
+        <th>Name</th>
+        <th>Lastname</th>
+        <th>Username</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in usersList()">
+          <td ng-click="selectUser({ userId : user.id})">{{user.name}}</td>
+          <td>{{user.lastname}}</td>
+          <td>{{user.username}}</td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="col-md-4">
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h4>Selected User</h4>
+        </div>
+        <div class="panel-body" ng-show="selectedUser()">
+          <p>{{selectedUser().name}}</p>
+          <p>{{selectedUser().lastname}}</p>
+          <p><b>{{selectedUser().username.toUpperCase()}}</b></p>
+          <span class="label label-danger" ng-if="selectedUser().marked">Marked</span>
+          <span class="label label-primary" ng-if="!selectedUser().marked">Unmarked</span>
+        </div>
+        <div class="panel-footer" ng-show="selectedUser()">
+          <button ng-click="markUser({ userId : selectedUser().id})" class="btn btn-primary">
+            <span ng-if="selectedUser().marked">Unmark</span>
+            <span ng-if="!selectedUser().marked">Mark</span>
+          </button>
+          <button ng-click="deleteUser({ userId : selectedUser().id})" class="btn btn-danger">
+            Delete
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

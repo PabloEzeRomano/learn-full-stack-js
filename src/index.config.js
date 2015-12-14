@@ -29,8 +29,8 @@ export default function routerConfig ($urlRouterProvider, $stateProvider, $locat
         '': {
           template : '<examples-view></examples-view>'
         },
-        'products' : {
-          template : '<basic-example></basic-example>'
+        'examples' : {
+          template : '<lrn-basic-example-view></lrn-basic-example-view>'
         }
       }
     })

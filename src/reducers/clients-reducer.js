@@ -30,11 +30,19 @@ export default function clients (state = INITIAL_STATE, action) {
   }
 
   switch (action.type) {
+
     case GET_CLIENTS :
+
       return state.set('clients', _clients);
+      break;
+
     case SELECT_CLIENT :
+
       return state.set('selectedClient', action.payload);
+      break;
+
     default :
+
       return state;
   }
 

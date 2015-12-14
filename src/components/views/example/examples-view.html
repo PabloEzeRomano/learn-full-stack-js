@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="list-group" ng-repeat="example in examples.examplesList | orderBy : exampleList.order">
+        <a class="list-group-item" ui-sref="{{example.state}}">
+          {{example.name}}
+        </a>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div ui-view="examples"></div>
+    </div>
+  </div>
+</div>
