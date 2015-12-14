@@ -30,7 +30,7 @@ export default function routerConfig ($urlRouterProvider, $stateProvider, $locat
           template : '<examples-view></examples-view>'
         },
         'products' : {
-          template : '<basic-examples></basic-examples>'
+          template : '<basic-example></basic-example>'
         }
       }
     })
