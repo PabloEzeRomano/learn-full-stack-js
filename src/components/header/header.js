@@ -26,6 +26,11 @@ export default ngModule => {
             {
               caption : 'About',
               state   : 'about',
+              order   : 4
+            },
+            {
+              caption : 'Products',
+              state   : 'products',
               order   : 3
             }
           ];
