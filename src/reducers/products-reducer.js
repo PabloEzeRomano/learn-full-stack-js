@@ -89,13 +89,13 @@ export default function products (state = INITIAL_STATE, action) {
       let exists = false;
 
       productsList.forEach((product) => {
-          if (product.get('code') === action.payload.createdProduct.code){
+          if (product.get('code') === action.payload.newProduct.code){
             exists = true;
           }
         });
 
       if (!exists){
-        action.payload.createdProduct['id'] = lastInsertedId +1;
+        action.payload.newProduct['id'] = lastInsertedId +1;
         newList = productsList.push(action.payload);
         state = state.set('lastInsertedId', lastInsertedId+1);
       }
@@ -108,12 +108,12 @@ export default function products (state = INITIAL_STATE, action) {
       product = state.get('selectedProduct');
 
       index = productsList.findIndex(function(product) {
-        return product.get('id') === action.payload.updatedProduct.id;
+        return product.get('code') === action.payload.updatedProduct.code;
       });
 
       if (index !== -1) {
         newList = productsList.update(index,action.payload.updatedProduct);
-        if (product.get('id') === action.payload.updatedProduct.id) {
+        if (product.get('code') === action.payload.updatedProduct.code) {
           state = state.set('selectedProduct', product);
         }
         return state.set('products', newList);
