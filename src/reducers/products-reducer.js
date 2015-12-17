@@ -36,7 +36,7 @@ const _products = Immutable.List([
     description     : 'Por tu cara',
     stock           : 52,
     available       : false,
-    code            : 654
+    code            : 321
   }),
   Immutable.Map({
     id              : 4,
@@ -58,9 +58,10 @@ const _products = Immutable.List([
 
 const INITIAL_STATE = Immutable.Map({
   products            : [],
-  lastInsertedId      : [],
+  lastInsertedId      : null,
   unavailableProducts : [],
-  removedProducts     : []
+  removedProducts     : [],
+  selectedProduct     : null
 });
 
 export default function products (state = INITIAL_STATE, action) {
@@ -96,7 +97,9 @@ export default function products (state = INITIAL_STATE, action) {
       if (!exists){
         action.payload.createdProduct['id'] = lastInsertedId +1;
         newList = productsList.push(action.payload);
+        state = state.set('lastInsertedId', lastInsertedId+1);
       }
+
 
       return state.set('products', newList);
 
@@ -109,7 +112,7 @@ export default function products (state = INITIAL_STATE, action) {
       });
 
       if (index !== -1) {
-        newList = productsList.update(index,payload.updatedProduct);
+        newList = productsList.update(index,action.payload.updatedProduct);
         if (product.get('id') === action.payload.updatedProduct.id) {
           state = state.set('selectedProduct', product);
         }
@@ -126,6 +129,12 @@ export default function products (state = INITIAL_STATE, action) {
       });
 
       if (index !== -1) {
+        productsList.forEach(
+          (product) => {
+            if (product.get('id') === action.payload.productId) {
+              state = state.push('removedProducts', product);
+            }
+          });
         newList = productsList.delete(index);
         if (state.get('selectedProduct').get('id') === action.payload.productId) {
           state = state.set('selectedProduct', null);
@@ -160,6 +169,7 @@ export default function products (state = INITIAL_STATE, action) {
 
       if (index !== -1) {
         newList = productsList.update(index,(product) =>{
+          state = state.push('unavailableProducts', product);
           return product.set('available', !product.get('available'));
         });
         if (product.get('id') === action.payload.productId) {

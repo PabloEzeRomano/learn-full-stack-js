@@ -1,0 +1,26 @@
+<div class="col-md-4">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h4>Selected Product</h4>
+    </div>
+    <div class="panel-body" ng-show="selectedProduct()">
+      <p>{{selectedProduct().name}}</p>
+      <p>{{selectedProduct().description}}</p>
+      <p><b>{{selectedProduct().stock}}</b></p>
+      <p>{{selectedProduct().code}}</p>
+      <span class="label label-danger" ng-if="selectedProduct().available">Unavailable</span>
+      <span class="label label-primary" ng-if="!selectedProduct().available">Available</span>
+    </div>
+    <div class="panel-footer" ng-show="selectedProduct()">
+      <button ng-click="softRemoveProduct({ productId : selectedProduct().id})" class="btn btn-primary">
+        <span ng-if="selectedProduct().available">Unavailable</span>
+        <span ng-if="!selectedProduct().available">Available</span>
+      </button>
+      <button ng-click="removeProduct({ productId : selectedProduct().id})" class="btn btn-danger">
+        Delete
+      </button>
+    </div>
+  </div>
+
+
+</div>

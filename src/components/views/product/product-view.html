@@ -1,19 +1,18 @@
-<div>
-  <h4>Products View</h4>
+<div class="col-md-8">
 
-  <product-list
-  products       = "product.productsList()"
-  select-product = "product.selectProduct(productId)">
+    <h4>Products View</h4>
 
-  </product-list>
+    <product-list
+      products       = "product.productsList()"
+      select-product = "product.selectProduct(productId)">
+    </product-list>
 
-  <product-form
-    selected-product    = "product.panelProduct()"
-    new-product         = "product.createProduct(product)"
-    update-product      = "product.updateProduct(product)"
-    remove-product      = "product.removeProduct(productId)"
-    soft-remove-product = "product.softRemoveProduct(productId)">
-  </product-form>
-
+    <product-form
+      selected-product    = "product.panelProduct()"
+      new-product         = "product.createProduct(product)"
+      update-product      = "product.updateProduct(product)"
+      remove-product      = "product.removeProduct(productId)"
+      soft-remove-product = "product.softRemoveProduct(productId)">
+    </product-form>
 
 </div>

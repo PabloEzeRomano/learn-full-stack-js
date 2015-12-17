@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="container">
+
+    <table class="table table-condensed table-striped">
+      <thead>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Stock</th>
+      <th>Code</th>
+      </thead>
+      <tbody>
+      <tr ng-repeat="product in products()">
+        <td ng-click="selectProduct({ productId : product.id})">{{product.name}}</td>
+        <td>{{product.description}}</td>
+        <td>{{product.stock}}</td>
+        <td>{{product.code}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
