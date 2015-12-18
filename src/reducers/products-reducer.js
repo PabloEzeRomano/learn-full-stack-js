@@ -19,32 +19,32 @@ const _products = Immutable.List([
     name            : 'Chocolate',
     description     : 'Mmmm rico!!',
     stock           : 5,
-    available       : false,
-    code            : 354
+    available       : true,
+    code            : '354'
   }),
   Immutable.Map({
     id              : 2,
     name            : 'Manteca',
     description     : 'Untame bebe',
     stock           : 6,
-    available       : false,
-    code            : 591
+    available       : true,
+    code            : '591'
   }),
   Immutable.Map({
     id              : 3,
     name            : 'Leche',
     description     : 'Por tu cara',
     stock           : 52,
-    available       : false,
-    code            : 321
+    available       : true,
+    code            : '321'
   }),
   Immutable.Map({
     id              : 4,
     name            : 'Huevos',
     description     : 'Chupalos',
     stock           : 45,
-    available       : false,
-    code            : 654
+    available       : true,
+    code            : '654'
   }),
   Immutable.Map({
     id              : 5,
@@ -52,15 +52,15 @@ const _products = Immutable.List([
     description     : 'Te destruye',
     stock           : 95,
     available       : false,
-    code            : 987
+    code            : '987'
   })
 ]);
 
 const INITIAL_STATE = Immutable.Map({
-  products            : [],
-  lastInsertedId      : null,
-  unavailableProducts : [],
-  removedProducts     : [],
+  products            : Immutable.List(),
+  lastInsertedId      : 5,
+  unavailableProducts : Immutable.List(),
+  removedProducts     : Immutable.List(),
   selectedProduct     : null
 });
 
@@ -70,11 +70,15 @@ export default function products (state = INITIAL_STATE, action) {
     return state;
   }
 
+  var actionPayload = null;
+
+  if (action.payload) {
+    actionPayload = Immutable.fromJS(action.payload);
+  }
+
   var
-    productsList = state.get('products'),
     newList,
     product,
-    lastInsertedId = 5,
     index;
 
   switch (action.type) {
@@ -88,35 +92,38 @@ export default function products (state = INITIAL_STATE, action) {
 
       let exists = false;
 
-      productsList.forEach((product) => {
-          if (product.get('code') === action.payload.newProduct.code){
+      state.get('products').forEach((product) => {
+          if (product.get('code') === actionPayload.get('product').get('code')) {
             exists = true;
           }
         });
 
-      if (!exists){
-        action.payload.newProduct['id'] = lastInsertedId +1;
-        newList = productsList.push(action.payload);
-        state = state.set('lastInsertedId', lastInsertedId+1);
-      }
+      if (!exists) {
 
+        var newProduct = Immutable.fromJS(actionPayload.get('product'));
+
+        state = state.set('lastInsertedId',state.get('lastInsertedId') + 1);
+        newProduct = newProduct.set('id', state.get('lastInsertedId'));
+        newList = state.get('products').push(newProduct);
+      }
 
       return state.set('products', newList);
 
     case UPDATE_PRODUCT :
 
-      product = state.get('selectedProduct');
-
-      index = productsList.findIndex(function(product) {
-        return product.get('code') === action.payload.updatedProduct.code;
+      index = state.get('products').findIndex( product => {
+        return product.get('code') === actionPayload.get('product').get('code');
       });
 
       if (index !== -1) {
-        newList = productsList.update(index,action.payload.updatedProduct);
-        if (product.get('code') === action.payload.updatedProduct.code) {
-          state = state.set('selectedProduct', product);
+
+        newList = state.get('products').update(index, () => actionPayload.get('product'));
+
+        if (state.get('selectedProduct').get('id') === actionPayload.get('product').get('id')) {
+          state = state.set('selectedProduct', actionPayload.get('product'));
         }
-        return state.set('products', newList);
+
+        state = state.set('products', newList);
       }
 
       return state;
@@ -124,19 +131,19 @@ export default function products (state = INITIAL_STATE, action) {
 
     case REMOVE_PRODUCT :
 
-      index = productsList.findIndex(function(product) {
+      index = state.get('products').findIndex(function(product) {
         return product.get('id') === action.payload.productId;
       });
 
       if (index !== -1) {
-        productsList.forEach(
+        state.get('products').forEach(
           (product) => {
-            if (product.get('id') === action.payload.productId) {
-              state = state.push('removedProducts', product);
+            if (product.get('id') === actionPayload.get('productId')) {
+              state = state.set('removedProducts', state.get('removedProducts').push(product));
             }
           });
-        newList = productsList.delete(index);
-        if (state.get('selectedProduct').get('id') === action.payload.productId) {
+        newList = state.get('products').delete(index);
+        if (state.get('selectedProduct').get('id') === actionPayload.get('productId')) {
           state = state.set('selectedProduct', null);
         }
         return state.set('products', newList);
@@ -147,32 +154,38 @@ export default function products (state = INITIAL_STATE, action) {
 
     case SELECT_PRODUCT :
 
-      var selectedProduct = null;
+      let found = false;
 
-      productsList.forEach(
-        function (product) {
-          if (product.get('id') === action.payload.productId) {
-            selectedProduct = product;
+      state.get('products').forEach(
+        product => {
+          if (product.get('id') === actionPayload.get('productId')) {
+            found = product;
           }
         });
 
-      return state.set('selectedProduct', selectedProduct);
+      if (found) {
+        state = state.set('selectedProduct', found);
+      } else {
+        state = state.set('selectedProduct', null);
+      }
+
+      return state;
       break;
 
     case SOFT_REMOVE_PRODUCT :
 
       product = state.get('selectedProduct');
 
-      index = productsList.findIndex(function(product) {
-        return product.get('id') === action.payload.productId;
+      index = state.get('products').findIndex(function(product) {
+        return product.get('id') === actionPayload.get('productId');
       });
 
       if (index !== -1) {
-        newList = productsList.update(index,(product) =>{
-          state = state.push('unavailableProducts', product);
+        newList = state.get('products').update(index, product => {
+          state = state.set('unavailableProducts', state.get('unavailableProducts').push(product));
           return product.set('available', !product.get('available'));
         });
-        if (product.get('id') === action.payload.productId) {
+        if (product.get('id') === actionPayload.get('productId')) {
           product = product.set('available', !product.get('available'));
           state = state.set('selectedProduct', product);
         }

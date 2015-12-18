@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="container">
+
+    <table class="table table-condensed table-striped">
+      <thead>
+      <th>Emission Date</th>
+      </thead>
+      <tbody>
+      <tr
+        ng-repeat="bill in bills()"
+        ng-class="{'text-danger' : !bill.open}">
+        <td ng-click="selectBill({ billId : bill.id})">{{bill.emissionDate}}</td>
+        <tr
+        ng-repeat="billLine in bills().billLines()">
+        <td></td>
+      </tr>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

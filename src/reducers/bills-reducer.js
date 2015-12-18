@@ -13,163 +13,15 @@ import
   }
   from '../actions/bills-actions';
 
-
-const _bills = Immutable.List([
-  Immutable.Map({
-    id           : 1,
-    clientId     : 1,
-    cuit         : '20-54861357-8',
-    emissionDate : '11/06/2015',
-    billLines    : Immutable.List([
-      Immutable.Map({
-        id        : 1,
-        billId    : 1,
-        productId : 612,
-        quantity  : 1,
-        price     : 12.5
-      }),
-      Immutable.Map({
-        id        : 2,
-        billId    : 1,
-        productId : 152,
-        quantity  : 3,
-        price:      50.66
-      }),
-      Immutable.Map({
-        id        : 3,
-        billId    : 1,
-        productId : 546,
-        quantity  : 2,
-        price     : 2.5
-      })
-    ])
-  }),
-  Immutable.Map({
-    id           : 2,
-    clientId     : 2,
-    cuit         : '20-54861357-8',
-    emissionDate : '11/06/2015',
-    billLines    : Immutable.List([
-      Immutable.Map({
-        id        : 1,
-        billId    : 2,
-        productId : 187,
-        quantity  : 11,
-        price     : 152.5
-      }),
-      Immutable.Map({
-        id        : 2,
-        billId    : 2,
-        productId : 915,
-        quantity  : 13,
-        price:      500.66
-      })
-    ])
-  }),
-  Immutable.Map({
-    id           : 3,
-    clientId     : 5,
-    cuit         : '20-54861357-8',
-    emissionDate : '11/06/2015',
-    billLines    : Immutable.List([
-      Immutable.Map({
-        id        : 1,
-        billId    : 3,
-        productId : 784,
-        quantity  : 5,
-        price     : 112.5
-      }),
-      Immutable.Map({
-        id        : 2,
-        billId    : 3,
-        productId : 152,
-        quantity  : 3,
-        price:      50.66
-      }),
-      Immutable.Map({
-        id        : 3,
-        billId    : 3,
-        productId : 591,
-        quantity  : 25,
-        price     : 2987.5
-      }),
-      Immutable.Map({
-        id        : 4,
-        billId    : 3,
-        productId : 56,
-        quantity  : 1,
-        price     : 2.5
-      })
-    ])
-  }),
-  Immutable.Map({
-    id           : 4,
-    clientId     : 47,
-    cuit         : '20-54861357-8',
-    emissionDate : '11/06/2015',
-    billLines    : Immutable.List([
-      Immutable.Map({
-        id        : 1,
-        billId    : 4,
-        productId : 91,
-        quantity  : 12,
-        price     : 196
-      }),
-      Immutable.Map({
-        id        : 2,
-        billId    : 4,
-        productId : 54,
-        quantity  : 3,
-        price:      46.3
-      }),
-      Immutable.Map({
-        id        : 3,
-        billId    : 4,
-        productId : 369,
-        quantity  : 24,
-        price     : 200.35
-      }),Immutable.Map({
-        id        : 4,
-        billId    : 4,
-        productId : 152,
-        quantity  : 3,
-        price:      50.66
-      }),
-      Immutable.Map({
-        id        : 5,
-        billId    : 4,
-        productId : 56,
-        quantity  : 2,
-        price     : 22.5
-      })
-    ])
-  }),
-  Immutable.Map({
-    id           : 5,
-    clientId     : 32,
-    cuit         : '20-54861357-8',
-    emissionDate : '11/06/2015',
-    billLines    : Immutable.List([
-      Immutable.Map({
-        id        : 1,
-        billId    : 5,
-        productId : 357,
-        quantity  : 18,
-        price     : 125.5
-      })
-    ])
-  })
-]);
-
 const INITIAL_STATE = Immutable.Map({
-  bills                  : [],
+  bills                  : Immutable.List(),
   selectedClient         : null,
-  openedBills            : [],
-  closedBills            : [],
-  payedBills             : [],
-  selectedBill           : [],
-  lastInsertedBillId     : null,
-  lastInsertedBillLineId : null
+  openedBills            : Immutable.List(),
+  closedBills            : Immutable.List(),
+  payedBills             : Immutable.List(),
+  selectedBill           : Immutable.List(),
+  lastInsertedBillId     : 0,
+  lastInsertedBillLineId : 0
 });
 
 export default function bills (state = INITIAL_STATE, action) {
@@ -178,23 +30,175 @@ export default function bills (state = INITIAL_STATE, action) {
     return state;
   }
 
-  var
-    billsList = state.get('bills'),
-    newList;
+  var actionPayload = null;
+
+  if (action.payload){
+    actionPayload = Immutable.fromJS(action.payload);
+  }
 
   switch (action.type) {
 
     case GET_BILLS :
 
-      return state.set('bills', _bills);
+      return state.set('bills');
       break;
 
     case OPEN_BILL :
 
-      action.payload.createdBill['id'] = lastInsertedId +1;
-      newList = billsList.push(action.payload);
+      let exists = false;
 
-      return state.set('bills', newList);
+      state.get('bills').forEach((bill) => {
+        if (bill.get('id') === actionPayload.get('bill').get('id')) {
+          exists = true;
+        }
+      });
+
+      let newList;
+
+      if (!exists) {
+
+        let bill = actionPayload.get('bill').toJS();
+
+        bill.emissionDate = new Date();
+
+        var newBill = Immutable.fromJS(bill);
+
+        state   = state.set('lastInsertedBillId',state.get('lastInsertedBillId') + 1);
+        newBill = newBill.set('id', state.get('lastInsertedBillId'));
+        newList = state.get('bills').push(newBill);
+        state = state.set('bills', newList);
+        state = state.set('selectedBill', newBill);
+        state = state.set('openedBills', state.get('openedBills').push(newBill));
+      }
+
+      return state;
+      break;
+
+    case ADD_BILL_LINE :
+
+      let bill = state.get('bills').find(bill => {
+        return bill.get('id') === actionPayload.get('billLine').get('billId');
+      });
+
+      let billLineWithProduct = false;
+
+      if (bill) {
+        billLineWithProduct = bill.get('billLines').find(billLine => {
+          return billLine.get('productId') === actionPayload.get('billLine').get('productId');
+        });
+      }
+
+      if (!billLineWithProduct) {
+
+        let udpatedBill = bill.set('billLines', bill.get('billLines').push(actionPayload.get('billLine')));
+
+        state = state.set('openedBills', state.get('openedBills').push(udpatedBill));
+
+        if (updatedBill.get('id') === state.get('selectedBill').get('id')){
+          state = state.set('selectedBill', updatedBill);
+        }
+
+        state = state.get('bills').update(index, () => udpatedBill);
+      }
+
+      return state;
+      break;
+
+    case REMOVE_BILL_LINE :
+
+      let bill = state.get('bills').find( bill => {
+        return bill.get('id') === actionPayload.get('billId');
+      });
+
+      let billLineIndex = false;
+
+      if (bill) {
+        billLineIndex = bill.get('billLines').findIndex (billLine => {
+          return billLine.get('id') === actionPayload.get('billLineId');
+        });
+      }
+
+      if (billLineIndex !== -1) {
+        let newList = state.get('bills').get('billLines').delete(billLineIndex);
+        if (state.get('selectedBill').get('id') === actionPayload.get('billId')) {
+          state = state.set('selectedBill', null);
+        }
+        return state.set('bills', newList);
+      }
+
+      return state;
+      break;
+
+    case CLOSE_BILL :
+
+      let billIndex = state.get('bills').findIndex ( bill => {
+        return bill.get('id') === actionPayload.get('billId');
+      });
+
+      if (billIndex !== -1) {
+        let newList = state.get('bills').update( billIndex, bill => {
+          return bill.set('open', !bill.get('open'));
+        });
+        if (bill.get('open') === false) {
+          state = state.set('closedBills', state.get('closedBills').push(bill));
+          state = state.set('openedBills', state.get('openedBills').delete(billIndex));
+        } else {
+          state = state.set('openedBills', state.get('openedBills').push(bill));
+          state = state.set('closedBills', state.get('closedBills').delete(billIndex));
+        }
+        if (state.get('selectedBill').get('id') === actionPayload.get('billId')){
+          state = state.set('selectedBill', !state.get('selectedBill').get('open'))
+        }
+
+        return state.set('bills', newList);
+      }
+
+      return state;
+      break;
+
+    case PAY_BILL :
+
+      let billIndex = state.get('bills').findIndex( billIndex, bill => {
+        return bill.get('id') === actionPayload.get('billId');
+      });
+
+      if (billIndex !== -1) {
+        let newList = state.get('bills').update( billIndex, bill =>{
+          return bill.set('payed', !bill.get('payed'));
+        })
+        if (state.get('payed') === true) {
+          state = state.set('payedBills', state.get('payedBills').push(bill));
+        } else {
+          state = state.set('payedBills', state.get('payedBills').delete(billIndex));
+        }
+        if (state.get('selectedBill').get('id') === actionPayload.get('billId')){
+          state = state.set('selectedBill', !state.get('selectedBill').get('payed'))
+        }
+
+        return state.set('bills', newList);
+      }
+
+      return state;
+      break;
+
+    case SELECT_BILL  :
+
+      let billFound = false;
+
+      state.get('bills').forEach( bill => {
+          if (bill.get('id') === actionPayload.get('billId')) {
+            billFound = bill;
+          }
+        });
+
+      if (found) {
+        state = state.set('selectedBill', billFound);
+      } else {
+        state = state.set('selectedBill', null);
+      }
+
+      return state;
+      break;
 
     default :
 

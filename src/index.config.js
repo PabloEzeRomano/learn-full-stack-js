@@ -4,7 +4,7 @@ export default function routerConfig ($urlRouterProvider, $stateProvider, $locat
 
   $locationProvider.html5Mode(true);
 
-  $urlRouterProvider.otherwise('/home');
+  $urlRouterProvider.otherwise('/products');
 
   $stateProvider
     .state('home', {

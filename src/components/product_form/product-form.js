@@ -10,7 +10,8 @@ export default ngModule => {
     return {
       restrict      : 'E',
       scope         : {
-        selectedProduct   : '&',
+        selectProduct     : '&',
+        selectedProduct   : '=',
         newProduct        : '&',
         updateProduct     : '&',
         removeProduct     : '&',
@@ -20,6 +21,15 @@ export default ngModule => {
       template      : template,
       link : {
         post : function postLink (scope, element, attributes) {
+
+          scope.submitProduct = () => {
+
+            if (!scope.selectedProduct.id) {
+              scope.newProduct({ myProduct : scope.selectedProduct });
+            } else {
+              scope.updateProduct({ myProduct : scope.selectedProduct });
+            }
+          };
 
         }
       }

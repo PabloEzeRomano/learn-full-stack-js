@@ -10,11 +10,12 @@ export default ngModule => {
     return {
       restrict      : 'E',
       scope         : {
-        selectedBill : '&',
-        products     : '&',
-        addBillLine  : '&',
-        closeBill    : '&',
-        payBill      : '&'
+        selectedBill   : '&',
+        products       : '&',
+        addBillLine    : '&',
+        removeBillLine : '&',
+        closeBill      : '&',
+        payBill        : '&'
       },
       replace       : true,
       template      : template,

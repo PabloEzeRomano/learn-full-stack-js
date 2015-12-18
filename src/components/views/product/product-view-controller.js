@@ -15,14 +15,6 @@ export default class ProductViewController {
     let unsubscribe = $ngRedux.connect(this.mapStateToThis, actions)(this);
     $scope.$on('$destroy', unsubscribe);
 
-    this.productsList = () => {
-      return this.products;
-    };
-
-    this.panelProduct = () => {
-      return this.selectedProduct;
-    };
-
     this.getProducts();
   }
 

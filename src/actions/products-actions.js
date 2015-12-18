@@ -17,33 +17,43 @@ export function getProducts () {
 export function createProduct (product) {
   return {
     type    : CREATE_PRODUCT,
-    payload : product
+    payload : {
+      product
+    }
   }
 }
 
 export function updateProduct (product) {
   return {
     type    : UPDATE_PRODUCT,
-    payload : product
+    payload : {
+      product
+    }
   }
 }
 
 export function removeProduct (productId) {
   return {
     type    : REMOVE_PRODUCT,
-    payload : productId
+    payload : {
+      productId
+    }
   }
 }
 export function selectProduct (productId) {
   return {
     type    : SELECT_PRODUCT,
-    payload : productId
+    payload : {
+      productId
+    }
   }
 }
 export function softRemoveProduct (productId) {
   return {
     type    : SOFT_REMOVE_PRODUCT,
-    payload : productId
+    payload : {
+      productId
+    }
   }
 }
 export default {

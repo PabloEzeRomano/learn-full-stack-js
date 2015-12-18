@@ -9,7 +9,9 @@
       <th>Code</th>
       </thead>
       <tbody>
-      <tr ng-repeat="product in products()">
+      <tr
+        ng-repeat="product in products()"
+        ng-class="{'text-danger' : !product.available}">
         <td ng-click="selectProduct({ productId : product.id})">{{product.name}}</td>
         <td>{{product.description}}</td>
         <td>{{product.stock}}</td>

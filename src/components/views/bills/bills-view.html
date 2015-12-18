@@ -1,20 +1,21 @@
 <div class="col-md-8">
 
-    <h4>Bills View</h4>
+  <h4>Bills View</h4>
 
-    <bill-list
-      clients     = ""
-      bills       = ""
-      select-bill = ""
-      open-bill   = "">
-    </bill-list>
+  <bill-list
+    clients     = "bill.clients"
+    bills       = "bill.bills"
+    select-bill = "bill.selectBill(billId)"
+    open-bill   = "bill.openBill(bill)">
+  </bill-list>
 
-    <bill-form
-      selected-bill = ""
-      products      = ""
-      add-bill-line = ""
-      close-bill    = ""
-      pay-bill      = "">
-    </bill-form>
+  <bill-form
+    selected-bill    = "bill.selectedBill"
+    products         = "bill.products"
+    add-bill-line    = "bill.addBillLine(billId, billLineId)"
+    remove-bill-line = "bill.removeBillLine(billId, billLineId)"
+    close-bill       = "bill.closeBill(billId)"
+    pay-bill         = "bill.payBill(billId)">
+  </bill-form>
 
 </div>
