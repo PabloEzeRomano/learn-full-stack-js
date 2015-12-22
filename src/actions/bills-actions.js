@@ -1,13 +1,13 @@
 'use strict';
 
-export const GET_BILLS        = 'GET_BILLS';
-export const OPEN_BILL        = 'OPEN_BILL';
-export const ADD_BILL_LINE    = 'ADD_BILL_LINE';
-export const REMOVE_BILL_LINE = 'REMOVE_BILL_LINE';
-export const CLOSE_BILL       = 'CLOSE_BILL';
-export const PAY_BILL         = 'PAY_BILL';
-export const SELECT_BILL      = 'SELECT_BILL';
-
+export const GET_BILLS              = 'GET_BILLS';
+export const GET_BILLS_BY_CLIENT_ID = 'GET_BILLS_BY_CLIENT_ID';
+export const OPEN_BILL              = 'OPEN_BILL';
+export const ADD_BILL_LINE          = 'ADD_BILL_LINE';
+export const REMOVE_BILL_LINE       = 'REMOVE_BILL_LINE';
+export const CLOSE_BILL             = 'CLOSE_BILL';
+export const PAY_BILL               = 'PAY_BILL';
+export const SELECT_BILL            = 'SELECT_BILL';
 
 export function getBills () {
   return {
@@ -15,20 +15,31 @@ export function getBills () {
   }
 }
 
-export function openBill (bill) {
+export function getBillsByClientId (clientId) {
   return {
-    type    : OPEN_BILL,
-    payload : bill
+    type    : GET_BILLS_BY_CLIENT_ID,
+    payload : {
+      clientId
+    }
   }
 }
 
-export function addBillLine (billId, billLineId) {
+export function openBill (bill) {
+  return {
+    type    : OPEN_BILL,
+    payload : {
+      bill
+    }
+  }
+}
+
+export function addBillLine (billId, billLine) {
   return {
     type    : ADD_BILL_LINE,
     payload :
     {
       billId : billId,
-      billLine : billLineId
+      billLine : billLine
     }
   }
 }
@@ -60,11 +71,14 @@ export function payBill (billId) {
 export function selectBill (billId) {
   return {
     type    : SELECT_BILL,
-    payload : billId
+    payload : {
+      billId
+    }
   }
 }
 export default {
   getBills,
+  getBillsByClientId,
   openBill,
   addBillLine,
   removeBill,

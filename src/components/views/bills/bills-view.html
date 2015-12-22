@@ -1,21 +1,75 @@
-<div class="col-md-8">
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
 
-  <h4>Bills View</h4>
+      <h4>Bills View</h4>
 
-  <bill-list
-    clients     = "bill.clients"
-    bills       = "bill.bills"
-    select-bill = "bill.selectBill(billId)"
-    open-bill   = "bill.openBill(bill)">
-  </bill-list>
+      <div>
+        <select
+          ng-change  = "bills.clientComboBoxOnChange()"
+          ng-options = "client.id as client.name for client in bills.clients"
+          ng-model   = "bills.selectedClientId">
+        </select>
 
-  <bill-form
-    selected-bill    = "bill.selectedBill"
-    products         = "bill.products"
-    add-bill-line    = "bill.addBillLine(billId, billLineId)"
-    remove-bill-line = "bill.removeBillLine(billId, billLineId)"
-    close-bill       = "bill.closeBill(billId)"
-    pay-bill         = "bill.payBill(billId)">
-  </bill-form>
+      </div>
+      <items-list
+        headers        = "bills.billsHeaders"
+        items          = "bills.billsByClientId"
+        >
+      </items-list>
 
+      <table
+        class="table table-striped table-condensed">
+        <thead>
+        <th>Number</th>
+        <th>Emission Date</th>
+        <th>C.U.I.T.</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="bill in bills.bills">
+          <td ng-click="bills.selectBill(bill.id)">{{bill.id}}</td>
+          <td>{{bill.emissionDate}}</td>
+          <td>{{bill.cuit}}</td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <bill-panel
+        ng-if           = "bills.selectedClient"
+        select-bill     = "bills.selectBill(billId)"
+        selected-client = "bills.selectedClient"
+        open-bill       = "bills.openBill(bill)"
+        products        = "bills.products"
+        selected-bill   = "bills.selectedBill"
+        add-bill-line   = "bills.addBillLine(billId, billLineId)"
+        close-bill      = "bills.closeBill(billId)"
+        pay-bill        = "bills.payBill(billId)">
+      </bill-panel>
+    </div>
+
+    <table
+      ng-if="bills.selectedBill.id"
+      class="table table-striped table-condensed">
+      <thead>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Stock</th>
+        <th>Code</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="product in bills.products">
+          <td ng-click="bills.addBillLine(selectedBill.id, { productId : product.id})">{{product.name}}</td>
+          <td>{{product.description}}</td>
+          <td>{{product.stock}}</td>
+          <td>{{product.code}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
 </div>

@@ -1,8 +1,8 @@
 'use strict';
 
 export default class AppController {
-  constructor() {
-
+  constructor($injector) {
+    console.log('billsView', $injector.has('billsViewDirective'));
   }
 }
 

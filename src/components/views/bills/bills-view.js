@@ -18,7 +18,7 @@ export default ngModule => {
       scope         : {},
       replace       : true,
       template      : template,
-      controllerAs  : 'bill',
+      controllerAs  : 'bills',
       controller    : controller,
       link : {
         post : function postLink (scope, element, attributes) {

@@ -18,6 +18,24 @@ export default ngModule => {
       link : {
         post : function postLink (scope, element, attributes) {
 
+          scope.productHeaders = [
+            {
+              caption  : 'Name',
+              property : 'name'
+            },
+            {
+              caption  : 'Description',
+              property : 'description'
+            },
+            {
+              caption  : 'Stock',
+              property : 'stock'
+            },
+            {
+              caption  : 'Code',
+              property : 'code'
+            }
+          ]
         }
       }
     };

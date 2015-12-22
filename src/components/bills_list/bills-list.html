@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="container">
+
+    <table class="table table-condensed table-striped">
+      <thead>
+        <th>ID</th>
+        <th>Emission Date</th>
+        <th>Total</th>
+      </thead>
+      <tbody>
+        <tr
+          ng-repeat="bill in bills()"
+          ng-class="{'text-danger' : !bill.open}">
+          <td ng-click="selectBill({ billId : bill.id})">{{bill.id}}</td>
+          <td>{{bill.emissionDate}}</td>
+          <td>{{totalBillCalculator(bill.billLines)}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table ng-if="selectBill().id" class="table table-condensed table-striped">
+      <thead>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="billLine in selectBill().billLines">
+          <td>{{bill.productId}}</td>
+          <td>{{bill.quantity}}</td>
+          <td>{{bill.price}}</td>
+          <td>{{totalBillLineCalculator(billLine)}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

@@ -4,6 +4,7 @@ import * as Immutable from 'immutable';
 import
   {
     GET_BILLS,
+    GET_BILLS_BY_CLIENT_ID,
     OPEN_BILL,
     ADD_BILL_LINE,
     REMOVE_BILL_LINE,
@@ -15,11 +16,11 @@ import
 
 const INITIAL_STATE = Immutable.Map({
   bills                  : Immutable.List(),
+  billsByClientId        : Immutable.List(),
   selectedClient         : null,
-  openedBills            : Immutable.List(),
   closedBills            : Immutable.List(),
   payedBills             : Immutable.List(),
-  selectedBill           : Immutable.List(),
+  selectedBill           : null,
   lastInsertedBillId     : 0,
   lastInsertedBillLineId : 0
 });
@@ -36,11 +37,22 @@ export default function bills (state = INITIAL_STATE, action) {
     actionPayload = Immutable.fromJS(action.payload);
   }
 
+  var
+    bill      = null,
+    billIndex = null;
+
   switch (action.type) {
 
     case GET_BILLS :
 
-      return state.set('bills');
+      return state;
+      break;
+
+    case GET_BILLS_BY_CLIENT_ID :
+
+      // fetch bills
+
+      return state;
       break;
 
     case OPEN_BILL :
@@ -57,18 +69,22 @@ export default function bills (state = INITIAL_STATE, action) {
 
       if (!exists) {
 
-        let bill = actionPayload.get('bill').toJS();
+        bill = actionPayload.get('bill').toJS();
 
         bill.emissionDate = new Date();
+        bill.billLines    = [];
 
         var newBill = Immutable.fromJS(bill);
 
         state   = state.set('lastInsertedBillId',state.get('lastInsertedBillId') + 1);
         newBill = newBill.set('id', state.get('lastInsertedBillId'));
         newList = state.get('bills').push(newBill);
-        state = state.set('bills', newList);
-        state = state.set('selectedBill', newBill);
-        state = state.set('openedBills', state.get('openedBills').push(newBill));
+        state   = state.set('bills', newList);
+        state   = state.set('selectedBill', newBill);
+
+        let newBillsByClient = state.get('billsByClientId').push(newBill);
+        state = state.set('billsByClientId', newBillsByClient);
+
       }
 
       return state;
@@ -76,8 +92,8 @@ export default function bills (state = INITIAL_STATE, action) {
 
     case ADD_BILL_LINE :
 
-      let bill = state.get('bills').find(bill => {
-        return bill.get('id') === actionPayload.get('billLine').get('billId');
+      bill = state.get('bills').find(bill => {
+        return bill.get('id') === actionPayload.get('billId');
       });
 
       let billLineWithProduct = false;
@@ -86,19 +102,16 @@ export default function bills (state = INITIAL_STATE, action) {
         billLineWithProduct = bill.get('billLines').find(billLine => {
           return billLine.get('productId') === actionPayload.get('billLine').get('productId');
         });
-      }
+        if (!billLineWithProduct) {
 
-      if (!billLineWithProduct) {
+          let updatedBill = bill.set('billLines', bill.get('billLines').push(actionPayload.get('billLine')));
 
-        let udpatedBill = bill.set('billLines', bill.get('billLines').push(actionPayload.get('billLine')));
+          if (updatedBill.get('id') === state.get('selectedBill').get('id')){
+            state = state.set('selectedBill', updatedBill);
+          }
 
-        state = state.set('openedBills', state.get('openedBills').push(udpatedBill));
-
-        if (updatedBill.get('id') === state.get('selectedBill').get('id')){
-          state = state.set('selectedBill', updatedBill);
+          state = state.get('bills').update(index, () => updatedBill);
         }
-
-        state = state.get('bills').update(index, () => udpatedBill);
       }
 
       return state;
@@ -106,7 +119,7 @@ export default function bills (state = INITIAL_STATE, action) {
 
     case REMOVE_BILL_LINE :
 
-      let bill = state.get('bills').find( bill => {
+      bill = state.get('bills').find( bill => {
         return bill.get('id') === actionPayload.get('billId');
       });
 
@@ -131,26 +144,30 @@ export default function bills (state = INITIAL_STATE, action) {
 
     case CLOSE_BILL :
 
-      let billIndex = state.get('bills').findIndex ( bill => {
+      billIndex = state.get('bills').findIndex ( bill => {
         return bill.get('id') === actionPayload.get('billId');
       });
 
       if (billIndex !== -1) {
-        let newList = state.get('bills').update( billIndex, bill => {
-          return bill.set('open', !bill.get('open'));
+        let newList = state.get('bills').update(billIndex, bill => bill.set('open', !bill.get('open')));
+
+        bill = newList.find(bill => {
+          return bill.get('id') === actionPayload.get('billId');
         });
+
         if (bill.get('open') === false) {
           state = state.set('closedBills', state.get('closedBills').push(bill));
-          state = state.set('openedBills', state.get('openedBills').delete(billIndex));
+          state = state.set('bills', state.get('bills').delete(billIndex));
         } else {
-          state = state.set('openedBills', state.get('openedBills').push(bill));
+          state = state.set('bills', state.get('bills').push(bill));
           state = state.set('closedBills', state.get('closedBills').delete(billIndex));
         }
+
         if (state.get('selectedBill').get('id') === actionPayload.get('billId')){
-          state = state.set('selectedBill', !state.get('selectedBill').get('open'))
+          state = state.set('selectedBill', bill.get('open'));
         }
 
-        return state.set('bills', newList);
+        state = state.set('bills', newList);
       }
 
       return state;
@@ -158,24 +175,27 @@ export default function bills (state = INITIAL_STATE, action) {
 
     case PAY_BILL :
 
-      let billIndex = state.get('bills').findIndex( billIndex, bill => {
+      billIndex = state.get('bills').findIndex(billIndex, bill => {
         return bill.get('id') === actionPayload.get('billId');
       });
 
       if (billIndex !== -1) {
-        let newList = state.get('bills').update( billIndex, bill =>{
-          return bill.set('payed', !bill.get('payed'));
-        })
-        if (state.get('payed') === true) {
+        let newList = state.get('bills').update( billIndex, bill => bill.set('paid', !bill.get('paid')));
+
+        bill = newList.find(bill => {
+          return bill.get('id') === actionPayload.get('billId');
+        });
+
+        if (state.get('paid') === true) {
           state = state.set('payedBills', state.get('payedBills').push(bill));
         } else {
           state = state.set('payedBills', state.get('payedBills').delete(billIndex));
         }
         if (state.get('selectedBill').get('id') === actionPayload.get('billId')){
-          state = state.set('selectedBill', !state.get('selectedBill').get('payed'))
+          state = state.set('selectedBill', !state.get('selectedBill').get('paid'))
         }
 
-        return state.set('bills', newList);
+        state = state.set('bills', newList);
       }
 
       return state;
@@ -191,7 +211,7 @@ export default function bills (state = INITIAL_STATE, action) {
           }
         });
 
-      if (found) {
+      if (billFound) {
         state = state.set('selectedBill', billFound);
       } else {
         state = state.set('selectedBill', null);

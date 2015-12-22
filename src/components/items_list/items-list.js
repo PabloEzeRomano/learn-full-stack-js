@@ -1,19 +1,19 @@
 'use strict';
 
-import template    from './bills-list.html';
-import style       from './bills-list.styl';
+import template    from './items-list.html';
+import style       from './items-list.styl';
 
 export default ngModule => {
 
-  ngModule.directive('billsList',function () {
+  ngModule.directive('itemsList',function () {
 
     return {
       restrict      : 'E',
       scope         : {
-        clients    : '&',
-        bills      : '&',
-        selectBill : '&',
-        openBill   : '&'
+        items         : '=',
+        headers       : '=',
+        selectAction  : '@',
+        parameterName : '@'
       },
       replace       : true,
       template      : template,

@@ -6,14 +6,14 @@
 
       <table class="table table-condensed table-striped">
         <thead>
-          <th>Name</th>
-          <th>Lastname</th>
+        <th>Name</th>
+        <th>Lastname</th>
         </thead>
         <tbody>
-          <tr ng-repeat="client in home.clients">
-            <td ng-click="home.selectClient(client)">{{client.name}}</td>
-            <td>{{client.lastname}}</td>
-          </tr>
+        <tr ng-repeat="client in home.clients">
+          <td ng-click="home.selectClient(client)">{{client.name}}</td>
+          <td>{{client.lastname}}</td>
+        </tr>
         </tbody>
       </table>
 

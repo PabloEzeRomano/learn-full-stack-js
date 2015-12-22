@@ -1,0 +1,16 @@
+<div>
+  <table class="table table-striped table-condensed">
+    <thead>
+    <th ng-repeat="value in headers">
+      {{value.name}}
+    </th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in items">
+      <td ng-repeat="value in headers">
+        {{item[value.caption]}}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
