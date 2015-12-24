@@ -1,0 +1,27 @@
+<div class="row">
+  <form
+    name="myForm"
+    ng-submit="onSearchSubmit({searchCriteria : myForm.searchCriteria})">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">New Product</h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            ng-model="myForm.searchCriteria"
+            required>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="list-group-item"
+       ng-repeat="item in listItems |
+  orderBy : orderBy"
+       ng-click="onItemClick">
+  </div>
+
+</div>
