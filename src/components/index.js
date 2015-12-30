@@ -17,7 +17,8 @@ import productForm      from './product_form/product-form';
 import billsList        from './bills_list/bills-list';
 import billsPanel       from './bill_panel/bill-panel';
 import itemsList        from './items_list/items-list';
-import searchList       from './search_list/search-list;
+import searchList       from './search_list/search-list';
+import testList         from './test_list/test-list';
 
 export default ngModule => {
   app(ngModule);
@@ -37,4 +38,5 @@ export default ngModule => {
   billsPanel(ngModule);
   itemsList(ngModule);
   searchList(ngModule);
+  testList(ngModule);
 };

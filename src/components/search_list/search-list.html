@@ -18,10 +18,6 @@
     </div>
   </form>
 
-  <div class="list-group-item"
-       ng-repeat="item in listItems |
-  orderBy : orderBy"
-       ng-click="onItemClick">
-  </div>
+  <div ng-repeat="item in items" search-list></div>
 
 </div>
