@@ -6,7 +6,9 @@
     <br>
     <span>. . . . . . . . . . . . . . .</span>
     <br>
-    <div ng-repeat="shortcut in selectedModule().shortcuts">
+    <div
+      ng-repeat="shortcut in selectedModule().shortcuts"
+      class>
       <a ui-sref="shortcut.link">{{shortcut.caption}}</a>
     </div>
   </div>
