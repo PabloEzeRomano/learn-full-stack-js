@@ -2,14 +2,15 @@
   <div class="col-md-4">
     <info user-info="userInfo">
     </info>
+    <br>
     <module-list
       module-list="modules"
-      on-click-module="changeModule(module)">
+      on-click-module="changeModule(name)">
     </module-list>
   </div>
   <div class="col-md-8">
     <module
-      shortcuts="activeShortcut"
+      shortcuts="activeShortcuts"
       module-functions="selectedModule"
       footer="footer">
     </module>

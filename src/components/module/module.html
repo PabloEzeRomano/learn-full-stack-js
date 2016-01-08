@@ -2,7 +2,9 @@
   <div class="col-md-4">
     <img src="" alt="">
     <span>seleccione una opcion</span>
+    <br>
     <span>. . . . . . . . . . .</span>
+    <br>
     <br>
     <div ng-repeat="shortcut in shortcuts()">
       <a ui-sref="shortcut.link">{{shortcut.caption}}</a>
@@ -12,6 +14,7 @@
     <div ng-repeat="function in moduleFunctions()"></div>
       <a ui-sref="function.link">{{function.caption}}</a>
   </div>
+  <br>
   <div ng-repeat="button in footer()">
     <button class="btn">{{button.buttonName}}</button>
   </div>

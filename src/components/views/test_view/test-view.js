@@ -27,7 +27,7 @@ export default ngModule => {
           {
             user: 'Pablo Romano',
             company: 'SistAr',
-            messege: 2
+            message: 2
           };
 
           scope.modules = [
@@ -132,39 +132,35 @@ export default ngModule => {
 
           scope.activeShortcuts = scope.shortcutsAlmacen;
 
-          scope.changeModule = (module) => {
-            switch(module.name){
+          scope.changeModule = function (name) {
+            switch(name){
               case 'Almacen' :
                 if(scope.selectedModule !== scope.moduleFunctionsAlmacen) {
                   scope.selectedModule = scope.moduleFunctionsAlmacen;
                   scope.activeShortcuts = scope.shortcutsAlmacen;
+                  console.log('cambio a Almacen');
                 }
                 break;
               case 'Caja' :
                 if(scope.selectedModule !== scope.moduleFunctionsCaja) {
                   scope.selectedModule = scope.moduleFunctionsCaja;
                   scope.activeShortcuts = scope.shortcutsCaja;
+                  console.log('cambio a Caja');
                 }
                 break;
               case 'Compras' :
                 if(scope.selectedModule !== scope.moduleFunctionsCompras) {
                   scope.selectedModule = scope.moduleFunctionsCompras;
                   scope.activeShortcuts = scope.shortcutsCompras;
+                  console.log('cambio a Compras');
                 }
                 break;
 
             }
-
           }
 
-          console.log('moduleList', scope.modules);
-          console.log('moduleCaja', scope.moduleFunctionsCaja);
-          console.log('shortcutCaja', scope.shortcutsCaja);
-          console.log('moduleAlmacen', scope.moduleFunctionsAlmacen);
-          console.log('shortcutAlmacen', scope.shortcutsAlmacen);
-          console.log('moduleCompras', scope.moduleFunctionsCaja);
-          console.log('shortcutCompras', scope.shortcutsCompras);
-          console.log('user', scope.userInfo);
+          console.log ('selectedModule', scope.selectedModule);
+          console.log ('activeShortcut', scope.activeShortcuts)
 
         }
       }
