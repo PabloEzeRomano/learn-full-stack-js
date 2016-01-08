@@ -2,20 +2,17 @@
   <div class="col-md-4">
     <img src="" alt="">
     <span>seleccione una opcion</span>
-    <br>
     <span>. . . . . . . . . . .</span>
     <br>
-    <br>
-    <div ng-repeat="shortcut in shortcuts()">
+    <div ng-repeat="shortcut in selectedModule().shortcuts">
       <a ui-sref="shortcut.link">{{shortcut.caption}}</a>
     </div>
   </div>
   <div class="col-md-8">
-    <div ng-repeat="function in moduleFunctions()"></div>
+    <div ng-repeat="function in selectedModule().moduleFunctions"></div>
       <a ui-sref="function.link">{{function.caption}}</a>
   </div>
-  <br>
-  <div ng-repeat="button in footer()">
-    <button class="btn">{{button.buttonName}}</button>
-  </div>
+  <footer ng-repeat="button in selectedModule().footer">
+    <button class="btn">{{button}}</button>
+  </footer>
 </div>

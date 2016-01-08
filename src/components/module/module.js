@@ -10,9 +10,7 @@ export default ngModule => {
     return {
       restrict      : 'E',
       scope         : {
-        shortcuts       : '&',
-        moduleFunctions : '&',
-        footer          : '&',
+        selectedModule : '&'
       },
       replace       : true,
       template      : template,
