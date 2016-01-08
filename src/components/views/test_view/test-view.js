@@ -51,15 +51,18 @@ export default ngModule => {
               moduleFunctions : [
                 {
                   link    : 'Almacen',
-                  caption : 'Este es el moduleFunction de almacen'
+                  caption : 'Este es el moduleFunction de almacen',
+                  title   : 'Title Almacen'
                 },
                 {
                   link    : 'Stock',
-                  caption : 'Este es el moduleFunction de Stock'
+                  caption : 'Este es el moduleFunction de Stock',
+                  title   : 'Title Stock'
                 },
                 {
                   link    : 'Asd',
-                  caption : 'Este es el moduleFunction de asd'
+                  caption : 'Este es el moduleFunction de asd',
+                  title   : 'Title Asd'
                 }
               ],
               footer : [
@@ -93,15 +96,19 @@ export default ngModule => {
               moduleFunctions : [
                 {
                   link    : 'Debe',
-                  caption : 'Este es el moduleFunction del debe'
+                  caption : 'Este es el moduleFunction del debe',
+                  title   : 'Title Debe'
                 },
                 {
                   link    : 'Caja',
-                  caption : 'Este es el moduleFunction de la caja'
+                  caption : 'Este es el moduleFunction de la caja',
+                  title   : 'Title Caja'
+
                 },
                 {
                   link    : 'Haber',
-                  caption : 'Este es el moduleFunction del Haber'
+                  caption : 'Este es el moduleFunction del Haber',
+                  title   : 'Title Haber'
                 }
               ],
               footer : [
@@ -127,7 +134,8 @@ export default ngModule => {
               moduleFunctions : [
                 {
                   link    : 'Compras',
-                  caption : 'Este es el moduleFunction de compras'
+                  caption : 'Este es el moduleFunction de compras',
+                  title   : 'Title Compras'
                 }
               ],
               footer : [
