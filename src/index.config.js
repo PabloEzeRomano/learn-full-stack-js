@@ -57,6 +57,14 @@ export default function routerConfig ($urlRouterProvider, $stateProvider, $locat
           template: '<bills-view></bills-view>'
         }
       }
+    })
+    .state('moduleTest', {
+      url: '/moduleTest',
+      views: {
+        '': {
+          template: '<test-view></test-view>'
+        }
+      }
     });
 
 

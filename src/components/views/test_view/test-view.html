@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="col-md-4">
+    <info user-info="userInfo">
+    </info>
+    <module-list
+      module-list="modules"
+      on-click-module="changeModule(module)">
+    </module-list>
+  </div>
+  <div class="col-md-8">
+    <module
+      shortcuts="activeShortcut"
+      module-functions="selectedModule"
+      footer="footer">
+    </module>
+  </div>
+</div>
