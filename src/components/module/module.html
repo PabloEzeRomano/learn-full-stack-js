@@ -1,24 +1,21 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-4">
-    <img src="" alt="">
-    <span class="test-text">seleccione una opcion</span>
-    <br>
-    <span class="test-text">. . . . . . . . . . . . . . .</span>
-    <br>
-    <div
-      ng-repeat="shortcut in selectedModule().shortcuts"
-      class="test-text">
-      <a ui-sref="shortcut.link">{{shortcut.caption}}</a>
-    </div>
+<div class="row">
+  <div class="col-md-4">
+  <img src="" alt="">
+  <span class="test-text">seleccione una opcion</span>
+  <br><hr>
+  <br>
+  <div
+    ng-repeat="shortcut in selectedModule().shortcuts"
+    class="test-text">
+    <a ui-sref="shortcut.link">{{shortcut.caption}}</a>
   </div>
-    <div class="col-md-8">
-      <div
-        ng-repeat="function in selectedModule().moduleFunctions"
-        class="test-text">
-        <h4 class="test-title">{{function.title}}</h4>
-        <a ui-sref="function.link">{{function.caption}}</a>
-      </div>
+  </div>
+  <div class="col-md-8">
+    <div
+      ng-repeat="function in selectedModule().moduleFunctions"
+      class="test-text">
+      <h4 class="test-title">{{function.title}}</h4>
+      <a ui-sref="function.link">{{function.caption}}</a>
     </div>
   </div>
   <button
@@ -26,4 +23,5 @@
     ng-repeat="button in selectedModule().footer">
     {{button.buttonName}}
   </button>
+
 </div>
