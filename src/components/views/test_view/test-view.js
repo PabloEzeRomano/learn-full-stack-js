@@ -144,12 +144,14 @@ export default ngModule => {
             }
           ];
 
-          scope.selectedModule = null;
+          scope.selectedModule = scope.modules[0];
 
           scope.changeModule = function (name) {
             for (var i = 0; i < scope.modules.length; i++) {
-                if (scope.modules[i].name === name ) {
+                if (scope.modules[i].name === name && scope.selectedModule.name !== name) {
                   scope.selectedModule = scope.modules[i];
+                  console.log ('selectedModule', scope.selectedModule);
+                  console.log ('functions', scope.selectedModule.moduleFunctions);
                 }
             }
           };
