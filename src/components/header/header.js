@@ -39,8 +39,8 @@ export default ngModule => {
               order   : 4
             },
             {
-              caption : 'Module Test',
-              state   : 'moduleTest',
+              caption : 'Grid Test',
+              state   : 'gridTest',
               order   : 4
             }
           ];

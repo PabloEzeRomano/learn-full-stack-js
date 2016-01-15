@@ -23,148 +23,37 @@ export default ngModule => {
       link : {
         post : function postLink (scope, element, attributes) {
 
-          scope.userInfo =
-          {
-            user: 'Pablo Romano',
-            company: 'SistAr',
-            message: 2
-          };
-
-          scope.modules = [
+          scope.myCollection = [
             {
-              name : 'Almacen',
-              shortcuts :
-                [
-                {
-                  link    : 'Almacen',
-                  caption : 'Este es el shortcut de almacen'
-                },
-                {
-                  link    : 'Stock',
-                  caption : 'Este es el shortcut de Stock'
-                },
-                {
-                  link    : 'Asd',
-                  caption : 'Este es el shortcut de asd'
-                }
-              ],
-              moduleFunctions : [
-                {
-                  link    : 'Almacen',
-                  caption : 'Este es el moduleFunction de almacen',
-                  title   : 'Title Almacen'
-                },
-                {
-                  link    : 'Stock',
-                  caption : 'Este es el moduleFunction de Stock',
-                  title   : 'Title Stock'
-                },
-                {
-                  link    : 'Asd',
-                  caption : 'Este es el moduleFunction de asd',
-                  title   : 'Title Asd'
-                }
-              ],
-              footer : [
-                {
-                  buttonName : 'Boton'
-                },
-                {
-                  buttonName : 'De'
-                },
-                {
-                  buttonName : 'Almacen'
-                }
-              ]
+              "firstName": "Cox",
+              "lastName": "Carney",
+              "company": "Enormo",
+              "employed": true
             },
             {
-              name : 'Caja',
-              shortcuts :  [
-                {
-                  link    : 'Debe',
-                  caption : 'Este es el shortcut del debe'
-                },
-                {
-                  link    : 'Caja',
-                  caption : 'Este es el shortcut de la caja'
-                },
-                {
-                  link    : 'Haber',
-                  caption : 'Este es el shortcut del haber'
-                }
-              ],
-              moduleFunctions : [
-                {
-                  link    : 'Debe',
-                  caption : 'Este es el moduleFunction del debe',
-                  title   : 'Title Debe'
-                },
-                {
-                  link    : 'Caja',
-                  caption : 'Este es el moduleFunction de la caja',
-                  title   : 'Title Caja'
-
-                },
-                {
-                  link    : 'Haber',
-                  caption : 'Este es el moduleFunction del Haber',
-                  title   : 'Title Haber'
-                }
-              ],
-              footer : [
-                {
-                  buttonName : 'Boton'
-                },
-                {
-                  buttonName : 'De'
-                },
-                {
-                  buttonName : 'Caja'
-                }
-              ]
+              "firstName": "Lorraine",
+              "lastName": "Wise",
+              "company": "Comveyer",
+              "employed": false
             },
             {
-              name : 'Compras',
-              shortcuts : [
-                {
-                  link    : 'Compras',
-                  caption : 'Este es el shortcut de compras'
-                }
-              ],
-              moduleFunctions : [
-                {
-                  link    : 'Compras',
-                  caption : 'Este es el moduleFunction de compras',
-                  title   : 'Title Compras'
-                }
-              ],
-              footer : [
-                {
-                  buttonName : 'Boton'
-                },
-                {
-                  buttonName : 'De'
-                },
-                {
-                  buttonName : 'Compras'
-                }
-              ]
+              "firstName": "Nancy",
+              "lastName": "Waters",
+              "company": "Fuelton",
+              "employed": false
             }
           ];
 
-          scope.selectedModule = scope.modules[0];
 
-          scope.changeModule = function (name) {
-            for (var i = 0; i < scope.modules.length; i++) {
-                if (scope.modules[i].name === name && scope.selectedModule.name !== name) {
-                  scope.selectedModule = scope.modules[i];
-                  console.log ('selectedModule', scope.selectedModule);
-                  console.log ('functions', scope.selectedModule.moduleFunctions);
-                }
-            }
+          scope.uiGridHeader = {
+            showGridFooter: true,
+            showColumnFooter: true,
+            enableFiltering: true,
+            data: scope.myCollection
           };
 
-          console.log ('selectedModule', scope.selectedModule);
+          console.log('data', scope.uiGridHeader.data);
+
         }
       }
     };

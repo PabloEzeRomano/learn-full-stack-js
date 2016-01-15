@@ -15,6 +15,7 @@ import ngImmutable        from './lib/ng-immutable';
 import stateTransformer   from './lib/state-transformer';
 import thunk              from 'redux-thunk';
 import moment             from 'moment';
+import angularUiGrid      from './../node_modules/angular-ui-grid/ui-grid';
 
 import routerConfig       from './index.config';
 
@@ -25,6 +26,7 @@ if (ON_TEST) {
 }
 
 const bootstrapCss = require('../node_modules/bootstrap/dist/css/bootstrap.min.css');
+const uiGridCss    = require('../node_modules/angular-ui-grid/ui-grid.css');
 
 const logger = createLogger({
   level: 'info',
@@ -35,6 +37,7 @@ const logger = createLogger({
 const ngModule = angular.module('app', [
   angularUiRouter,
   'ui.bootstrap',
+  'ui.grid',
   ngRedux,
   ngReduxRouter,
   ngImmutable
