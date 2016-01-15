@@ -10,19 +10,14 @@ export default ngModule => {
     return {
       restrict      : 'E',
       scope         : {
-        collection : '&',
-        header     : '&'
+        gridOptions : '&'
       },
       replace       : true,
       template      : template,
       link : {
         post : function postLink (scope, element, attributes) {
 
-          console.log('collection', scope.collection());
-
-          console.log('header', scope.header);
-
-          console.log('scope', scope);
+          console.log('Grid Options', scope.gridOptions());
 
         }
       }
