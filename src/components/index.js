@@ -22,7 +22,8 @@ import searchList       from './search_list/search-list';
 import module           from './module/module';
 import moduleList       from './module_list/module-list';
 import info             from './info/info';
-import simpleGrid       from './simple_grid/simple-grid'
+import simpleGrid       from './simple_grid/simple-grid';
+import simpleForm       from './simple_form/simple-form';
 
 export default ngModule => {
   app(ngModule);
@@ -47,4 +48,5 @@ export default ngModule => {
   moduleList(ngModule);
   info(ngModule);
   simpleGrid(ngModule);
+  simpleForm(ngModule);
 };

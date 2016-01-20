@@ -11,7 +11,7 @@ export default ngModule => {
     test(ngModule);
   }
 
-  ngModule.directive('testView',function () {
+  ngModule.directive('testView',function (uiGridConstants) {
 
     return {
       restrict      : 'E',
@@ -21,51 +21,60 @@ export default ngModule => {
       controllerAs  : 'testView',
       controller    : controller,
       link : {
-        post : function postLink (scope,uiGridConstants, element, attributes) {
+        post : function postLink (scope, element, attributes) {
 
-          scope.myCollection = [
+          scope.title = 'Test title';
+
+          scope.subtitle = 'Test subtitle';
+
+          scope.formFields = [
             {
-              "firstName": "Cox",
-              "lastName": "Carney",
-              "age": "23",
-              "employedSince": "17/02/2000"
+              key: 'username',
+              type: 'input',
+              templateOptions: {
+                type: 'text',
+                label: 'Username',
+                placeholder: 'Enter your username',
+                required: true
+              }
             },
             {
-              "firstName": "Lorraine",
-              "lastName": "Wise",
-              "age": "45",
-              "employedSince": "30/05/2010"
+              key: 'firstName',
+              type: 'input',
+              templateOptions: {
+                type: 'text',
+                label: 'First Name',
+                placeholder: 'Enter your first name',
+                required: true
+              }
             },
             {
-              "firstName": "Nancy",
-              "lastName": "Waters",
-              "age": "34",
-              "employedSince": '11/09/2002'
+              key: 'lastName',
+              type: 'input',
+              templateOptions: {
+                type: 'text',
+                label: 'Last Name',
+                placeholder: 'Enter your last name',
+                required: true
+              }
+            },
+            {
+              key: 'email',
+              type: 'input',
+              templateOptions: {
+                type: 'email',
+                label: 'Email address',
+                placeholder: 'Enter email',
+                required: true
+              }
             }
           ];
 
+          scope.onSubmit = (model) => {
+            console.log('model', model);
+          }
 
-          scope.uiGridHeader = {
-            showGridFooter: true,
-            showColumnFooter: true,
-            enableFiltering: true,
-            data: scope.myCollection,
-            columnDefs:
-              [
-                { field: 'firstName', width: '10%' },
-                { field: 'lastName',width: '10%' },
-                { field: 'age', aggregationType: uiGridConstants.aggregationTypes.sum, width:'10%'},
-                { field: 'employedSince', width: '10%'},
-                { name:'minAge',field: 'age', aggregationType: uiGridConstants.aggregationTypes.min, displayName: 'Minimum age',width: '10%' },
-                { name:'maxAge',field: 'age', aggregationType: uiGridConstants.aggregationTypes.max, displayName: 'Maximum age',width: '10%' },
-                { name:'avgAge',field: 'age', aggregationType: uiGridConstants.aggregationTypes.avg, displayName: 'Average age',width: '10%'}
-              ],
-            onRegisterApi: function(gridApi) {
-              $scope.gridApi = gridApi;
-            }
-          };
-
-          console.log('data', scope.uiGridHeader.data);
+          console.log(scope.formFields);
 
         }
       }
