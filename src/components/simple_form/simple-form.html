@@ -1,0 +1,14 @@
+<form
+  ng-submit="onFormSubmit({formModel : formModel})">
+  <h1>{{title}}</h1>
+  <h4>{{subtitle}}</h4>
+  <formly-form
+    model="formModel"
+    field="sarConfig">
+    <button
+      type="submit"
+      class="btn btn-primary">
+      Submit
+    </button>
+  </formly-form>
+</form>

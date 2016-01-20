@@ -1,0 +1,10 @@
+<search-list
+  class="list-group"
+  on-search-submit="fetchItems(searchCriteria)"
+  on-item-click="selectListItem(item)"
+  order-by="name"
+  list-items="items">
+  <div class="list-group-item">
+    {{item.name}}
+  </div>
+</search-list>

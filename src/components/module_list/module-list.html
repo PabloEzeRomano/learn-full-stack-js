@@ -1,0 +1,10 @@
+<div class="row module-view">
+  <div ng-repeat="module in moduleList()">
+    <button
+      class="module-list-btn btn btn-warning"
+      ng-click="onClickModule({ name : module.name})">
+      {{module.name}}
+    </button>
+    <br>
+  </div>
+</div>
