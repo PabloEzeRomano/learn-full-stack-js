@@ -23,10 +23,6 @@ export default ngModule => {
       link : {
         post : function postLink (scope, element, attributes) {
 
-          scope.title = 'Test title';
-
-          scope.subtitle = 'Test subtitle';
-
           scope.formFields = [
             {
               key: 'username',
@@ -72,9 +68,7 @@ export default ngModule => {
 
           scope.onSubmit = (model) => {
             console.log('model', model);
-          }
-
-          console.log(scope.formFields);
+          };
 
         }
       }
