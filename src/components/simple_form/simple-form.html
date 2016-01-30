@@ -1,14 +1,21 @@
 <form
+  ng-class="getOuterClasses()"
   ng-submit="onFormSubmit({formModel : formModel})">
-  <h1>{{title}}</h1>
-  <h4>{{subtitle}}</h4>
-  <formly-form
-    model="formModel"
-    fields="sarConfig()">
+  <div ng-class="getHeadingClasses()">
+    <h1>{{title}}</h1>
+    <h4>{{subtitle}}</h4>
+  </div>
+  <div ng-class="getBodyClasses()">
+    <formly-form
+      model="formModel"
+      fields="sarConfig()">
+    </formly-form>
+  </div>
+  <div ng-class="getFooterClasses()">
     <button
       type="submit"
       class="btn btn-primary">
       Submit
     </button>
-  </formly-form>
+  </div>
 </form>

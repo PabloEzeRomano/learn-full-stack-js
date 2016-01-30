@@ -17,6 +17,9 @@ import thunk              from 'redux-thunk';
 import moment             from 'moment';
 import angularUiGrid      from './../node_modules/angular-ui-grid/ui-grid';
 import formly             from './../node_modules/angular-formly/dist/formly';
+import lodash             from './../node_modules/lodash/lodash'
+import simpleLogger       from './../node_modules/angular-simple-logger/dist/index'
+import googleMapsApi      from './../node_modules/angular-google-maps/dist/angular-google-maps'
 
 import routerConfig       from './index.config';
 
@@ -40,6 +43,7 @@ const ngModule = angular.module('app', [
   angularUiRouter,
   'ui.bootstrap',
   'ui.grid',
+  'uiGmapgoogle-maps',
   ngRedux,
   ngReduxRouter,
   'formly',

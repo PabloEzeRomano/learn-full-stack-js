@@ -58,11 +58,11 @@ export default function routerConfig ($urlRouterProvider, $stateProvider, $locat
         }
       }
     })
-    .state('formlyTest', {
-      url: '/formlyTest',
+    .state('maps', {
+      url: '/maps',
       views: {
         '': {
-          template: '<test-view></test-view>'
+          template: '<sar-google-map></sar-google-map>'
         }
       }
     });

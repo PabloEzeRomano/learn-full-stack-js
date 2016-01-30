@@ -1,0 +1,67 @@
+<div>
+  <div>
+    <button
+      ng-click="toggleMenu()">
+      <span ng-if="!hideMenu">Ocultar menu de moviles</span>
+      <span ng-if="hideMenu">Mostrar menu de moviles</span>
+    </button>
+  </div>
+  <div class="container">
+    <div
+      ng-class="!hideMenu ? 'col-xs-9' : 'col-xs-12'">
+      <ui-gmap-google-map
+        center="map().center"
+        zoom="map().zoom"
+        draggable="true"
+        options="options"
+        bounds="map().bounds"
+        id="map_canvas">
+        <ui-gmap-polyline
+          ng-repeat="line in polylines"
+          path="line.path"
+          stroke="line.stroke"
+          visible='line.visible'
+          geodesic='line.geodesic'
+          fit="true"
+          editable="line.editable"
+          draggable="line.draggable"
+          icons='line.icons'>
+        </ui-gmap-polyline>
+        <ui-gmap-markers
+          models="markers()"
+          coords="'self'"
+          icon="'icon'">
+        </ui-gmap-markers>
+      </ui-gmap-google-map>
+    </div>
+    <div
+      class="col-xs-3"
+      ng-show="!hideMenu">
+      <div
+        class="list-group">
+        <div>
+          <button
+            class="list-group-item btn btn-primary"
+            type="button"
+            ng-click="toggleAllMobiles()">
+            <span ng-if="mobilesToggle">Seleccionar todos</span>
+            <span ng-if="!mobilesToggle"> Deseleccionar todos</span>
+          </button>
+          <br>
+        </div>
+        <div
+          ng-repeat="line in polylines">
+          <button
+            type="button"
+            class="list-group-item btn btn-primary"
+            ng-click="toggleMobile(line)"
+            ng-style="{'background-color': line.visible === true? line.stroke.color : white }">
+            {{line.id}}
+          </button>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

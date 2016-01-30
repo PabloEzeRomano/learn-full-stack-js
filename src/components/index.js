@@ -24,6 +24,7 @@ import moduleList       from './module_list/module-list';
 import info             from './info/info';
 import simpleGrid       from './simple_grid/simple-grid';
 import simpleForm       from './simple_form/simple-form';
+import googleMaps       from './google_maps/google-maps';
 
 export default ngModule => {
   app(ngModule);
@@ -49,4 +50,5 @@ export default ngModule => {
   info(ngModule);
   simpleGrid(ngModule);
   simpleForm(ngModule);
+  googleMaps(ngModule);
 };

@@ -39,8 +39,8 @@ export default ngModule => {
               order   : 4
             },
             {
-              caption : 'Formly Test',
-              state   : 'formlyTest',
+              caption : 'Google Map Test',
+              state   : 'maps',
               order   : 4
             }
           ];
