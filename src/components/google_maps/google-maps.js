@@ -16,20 +16,24 @@ export default ngModule => {
     return {
       restrict: 'E',
       scope: {
-        map       : '@',
+        map       : '&',
         polylines : '=',
-        markers   : '@',
-        options   : '@'
+        markers   : '&',
+        options   : '&'
       },
       replace: true,
       template: template,
       link: {
         post: function postLink(scope, element, attributes) {
 
-          console.log('polylines', scope.polylines);
+          console.log('map', scope.map);
+
+
+          console.log('markers', scope.markers);
 
           uiGmapGoogleMapApi.then(function () {
-            scope.polylines().forEach((line) => {
+
+            scope.polylines.forEach((line) => {
               line.visible = true;
               line.icons   = [{
                 icon: {
@@ -45,7 +49,7 @@ export default ngModule => {
           });
 
           scope.toggleMobile = (line)=> {
-           scope.polylines().find( (polyline) => {
+           scope.polylines.find( (polyline) => {
              if(polyline === line) {
                polyline.visible = !polyline.visible;
              }
@@ -61,13 +65,16 @@ export default ngModule => {
             return color;
           };
 
-          scope.mobilesToggle = false;
+          scope.selectAllMobiles = () => {
+              scope.polylines.forEach( (line) => {
+                line.visible = true;
+              })
+          };
 
-          scope.toggleAllMobiles = () => {
-            scope.polylines().forEach( (line) => {
-              line.visible = !line.visible;
-            });
-            scope.mobilesToggle = !scope.mobilesToggle;
+          scope.deselectAllMobiles = () => {
+            scope.polylines.forEach( (line) => {
+              line.visible = false;
+            })
           };
 
           scope.hideMenu = false;

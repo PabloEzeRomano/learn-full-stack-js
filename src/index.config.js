@@ -62,7 +62,7 @@ export default function routerConfig ($urlRouterProvider, $stateProvider, $locat
       url: '/maps',
       views: {
         '': {
-          template: '<sar-google-map></sar-google-map>'
+          template: '<test-view></test-view>'
         }
       }
     });

@@ -11,7 +11,7 @@ export default ngModule => {
     test(ngModule);
   }
 
-  ngModule.directive('testView',function (uiGridConstants) {
+  ngModule.directive('testView',function (uiGmapGoogleMapApi) {
 
     return {
       restrict      : 'E',
@@ -31,32 +31,6 @@ export default ngModule => {
             zoom: 17,
             bounds: {}
           };
-
-          scope.markers = [
-            {
-              id: 1,
-              title : 'marker 1',
-              latitude: -27.473077,
-              longitude: -58.820106
-            },
-            {
-              id: 2,
-              title : 'marker 2',
-              latitude: -27.473305,
-              longitude: -58.820714
-            },
-            {
-              id: 3,
-              title : 'marker 3',
-              latitude: -27.473161,
-              longitude: -58.819518
-            }
-          ];
-
-          scope.options = {
-            scrollwheel: false
-          };
-
           scope.polylines = [
             {
               id: 'Movil 1',
@@ -144,6 +118,33 @@ export default ngModule => {
               ]
             }
           ];
+
+          scope.markers = [
+            {
+              id: 1,
+              title : 'marker 1',
+              latitude: -27.473077,
+              longitude: -58.820106
+            },
+            {
+              id: 2,
+              title : 'marker 2',
+              latitude: -27.473305,
+              longitude: -58.820714
+            },
+            {
+              id: 3,
+              title : 'marker 3',
+              latitude: -27.473161,
+              longitude: -58.819518
+            }
+          ];
+
+          scope.options = {
+            scrollwheel: false
+          };
+
+          console.log('testMarkers', scope.markers);
 
         }
       }
