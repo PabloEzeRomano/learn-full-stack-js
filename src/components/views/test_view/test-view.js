@@ -31,6 +31,7 @@ export default ngModule => {
             zoom: 17,
             bounds: {}
           };
+
           scope.polylines = [
             {
               id: 'Movil 1',
@@ -116,6 +117,91 @@ export default ngModule => {
                   timestamp : new Date ("2015-03-25T12:17:00")
                 }
               ]
+            },
+            {
+              id: 'Movil 4',
+              path: [
+                {
+                  latitude: -27.474702,
+                  longitude: -58.817617,
+                  timestamp : new Date ("2015-03-27T12:15:00")
+                },
+                {
+                  latitude: -27.473998,
+                  longitude:  -58.817488,
+                  timestamp : new Date ("2015-03-27T12:16:00")
+                },
+                {
+                  latitude: -27.472989,
+                  longitude: -58.817241,
+                  timestamp : new Date ("2015-03-27T12:17:00")
+                }
+              ]
+            },
+            {
+              id: 'Movil 5',
+              path: [
+                {
+                  latitude: -27.473988,
+                  longitude: -58.817928,
+                  timestamp : new Date ("2015-03-27T12:15:00")
+                },
+                {
+                  latitude: -27.473864,
+                  longitude:  -58.818912,
+                  timestamp : new Date ("2015-03-27T12:16:00")
+                },
+                {
+                  latitude: -27.473857,
+                  longitude: -58.819119,
+                  timestamp : new Date ("2015-03-27T12:17:00")
+                },
+                {
+                  latitude: -27.473452,
+                  longitude: -58.819039,
+                  timestamp : new Date ("2015-03-27T12:17:00")
+                }
+              ]
+            },
+            {
+              id: 'Movil 6',
+              path: [
+                {
+                  latitude: -27.474516,
+                  longitude: -58.823469,
+                  timestamp : new Date ("2015-03-28T12:15:00")
+                },
+                {
+                  latitude: -27.473802,
+                  longitude:  -58.823389,
+                  timestamp : new Date ("2015-03-28T12:16:00")
+                },
+                {
+                  latitude: -27.473393,
+                  longitude: -58.823335,
+                  timestamp : new Date ("2015-03-28T12:17:00")
+                }
+              ]
+            },
+            {
+              id: 'Movil 7',
+              path: [
+                {
+                  latitude: -27.474369,
+                longitude:  -58.822100,
+                  timestamp : new Date ("2015-03-28T12:15:00")
+                },
+                {
+                  latitude: -27.474660,
+                  longitude: -58.822151,
+                  timestamp : new Date ("2015-03-28T12:16:00")
+                },
+                {
+                  latitude: -27.474772,
+                  longitude: -58.820971,
+                  timestamp : new Date ("2015-03-28T12:17:00")
+                }
+              ]
             }
           ];
 
@@ -141,10 +227,8 @@ export default ngModule => {
           ];
 
           scope.options = {
-            scrollwheel: false
+            scrollwheel: true
           };
-
-          console.log('testMarkers', scope.markers);
 
         }
       }

@@ -15,7 +15,7 @@
         center="map().center"
         zoom="map().zoom"
         draggable="true"
-        options="options"
+        options="options()"
         bounds="map().bounds"
         id="map_canvas">
         <ui-gmap-polyline
@@ -30,7 +30,7 @@
           icons='line.icons'>
         </ui-gmap-polyline>
         <ui-gmap-markers
-          models="markers"
+          models="markers()"
           coords="'self'"
           icon="'icon'">
         </ui-gmap-markers>
@@ -65,9 +65,9 @@
           <div>
             <button
               type="button"
-              class="btn btn-primary btn-block"
+              class="btn btn-block"
               ng-click="toggleMobile(line)"
-              ng-style="{'background-color': line.visible === true? line.stroke.color : white }">
+              ng-style="{'background-color': line.visible === true? line.stroke.color : '#635a4e'}">
               {{line.id}}
             </button>
           </div>

@@ -26,11 +26,6 @@ export default ngModule => {
       link: {
         post: function postLink(scope, element, attributes) {
 
-          console.log('map', scope.map);
-
-
-          console.log('markers', scope.markers);
-
           uiGmapGoogleMapApi.then(function () {
 
             scope.polylines.forEach((line) => {
