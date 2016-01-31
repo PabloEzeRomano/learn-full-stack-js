@@ -16,40 +16,76 @@ export default ngModule => {
     return {
       restrict: 'E',
       scope: {
-        map       : '&',
-        polylines : '=',
-        markers   : '&',
-        options   : '&'
+        vehicles : '=',
+        map      : '&',
+        options  : '&'
       },
       replace: true,
       template: template,
       link: {
-        post: function postLink(scope, element, attributes) {
+        post: function postLink(scope, element, attributes, $filter) {
+
+          console.log('vehicles', scope.vehicles);
 
           uiGmapGoogleMapApi.then(function () {
+            console.log('vehicles', scope.vehicles);
+            scope.vehicles.forEach((vehicle) => {
 
-            scope.polylines.forEach((line) => {
-              line.visible = true;
-              line.icons   = [{
+              vehicle.visible = true;
+              vehicle.icons   = [{
                 icon: {
                   path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
                 },
                 offset: '25px',
                 repeat: '70px'
               }];
-              line.stroke = {};
-              line.stroke.weight = 5;
-              line.stroke.color = scope.randomColorGenerator();
+              vehicle.stroke = {};
+              vehicle.stroke.weight = 5;
+              vehicle.stroke.color = scope.randomColorGenerator();
             });
+
+            scope.compareCar(scope.initialDateTime,scope.endDateTime);
+
           });
 
-          scope.toggleMobile = (line)=> {
-           scope.polylines.find( (polyline) => {
-             if(polyline === line) {
-               polyline.visible = !polyline.visible;
-             }
-           })
+          scope.toggleMobile = (vehicle)=> {
+            scope.vehicles.find( (polyvehicle) => {
+              if(polyvehicle === vehicle) {
+                polyvehicle.visible = !polyvehicle.visible;
+              }
+            })
           };
+
+          scope.initialDateTime = moment().format('M/D/YYYY 00:00');
+
+          scope.endDateTime = moment().format('M/D/YYYY 23:59');
+
+          scope.compareCar = function (initialDate, endDate) {
+            console.log('vehicles', scope.vehicles);
+            scope.vehicles.forEach( (vehicle) => {
+              vehicle.coordinates.forEach ( (coordinates) => {
+                if ((moment(coordinates.timestamp).isAfter(initialDate)) && (moment(coordinates.timestamp).isBefore(endDate))) {
+
+                  if (vehicle.visible === false) {
+                    vehicle.visible = true;
+                  }
+
+                  vehicle.showOnDate = true;
+
+                }
+                else {
+
+                  if (vehicle.showOnDate === true){
+                    vehicle.showOnDate = false;
+                  }
+                  vehicle.visible = false;
+                  console.log('deberia ser false',vehicle.visible);
+                }
+              });
+            });
+          };
+
+
 
           scope.randomColorGenerator = () => {
             let chars = '0123456789ABCDEF'.split('');
@@ -61,18 +97,26 @@ export default ngModule => {
           };
 
           scope.selectAllMobiles = () => {
-              scope.polylines.forEach( (line) => {
-                line.visible = true;
-              })
-          };
-
-          scope.deselectAllMobiles = () => {
-            scope.polylines.forEach( (line) => {
-              line.visible = false;
+            scope.vehicles.forEach( (vehicle) => {
+              if (vehicle.showOnDate) {
+                vehicle.visible = true;
+              }
             })
           };
 
-          scope.hideMenu = false;
+          scope.deselectAllMobiles = () => {
+            scope.vehicles.forEach( (vehicle) => {
+              if (vehicle.showOnDate) {
+                vehicle.visible = false;
+              }
+            })
+          };
+
+          scope.hideMenu = true;
+
+          scope.hideMenu = setTimeout(function () {
+            scope.hideMenu = false;
+          }, 500);
 
           scope.toggleMenu = () => {
             scope.hideMenu = !scope.hideMenu;

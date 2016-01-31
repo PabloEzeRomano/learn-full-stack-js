@@ -1,13 +1,39 @@
 <div>
-  <div class="col-xs-offset-5">
-    <button
-      class="btn btn-primary"
-      ng-click="toggleMenu()">
-      <span ng-if="!hideMenu">Ocultar menu de moviles</span>
-      <span ng-if="hideMenu">Mostrar menu de moviles</span>
-    </button>
+  <div>
+    <div class="col-xs-offset-5">
+      <button
+        class="btn btn-primary"
+        ng-click="toggleMenu()">
+        <span ng-if="!hideMenu">Ocultar menu de moviles</span>
+        <span ng-if="hideMenu">Mostrar menu de moviles</span>
+      </button>
+    </div>
+    <br>
+    <div class="col-xs-4">
+      Elija inicio de la busqueda:
+      <input
+        ng-model="initialDateTime"
+        datetime-picker
+        hour="23"
+        minute='59'/>
+    </div>
+    <div class="col-xs-4">
+      Elija fin de la busqueda:
+      <input
+        ng-model="endDateTime"
+        datetime-picker
+        hour="23"
+        minute='59'/>
+    </div>
+    <div class="col-xs-2">
+      <button
+        class="btn btn-primary"
+        ng-click="compareCar(initialDateTime, endDateTime)">
+        Buscar
+      </button>
+    </div>
+    <br><br>
   </div>
-  <br><br>
   <div >
     <div
       ng-class="!hideMenu ? 'col-xs-8' : 'col-xs-12'">
@@ -19,18 +45,17 @@
         bounds="map().bounds"
         id="map_canvas">
         <ui-gmap-polyline
-          ng-repeat="line in polylines"
-          path="line.path"
-          stroke="line.stroke"
-          visible='line.visible'
-          geodesic='line.geodesic'
-          fit="true"
-          editable="line.editable"
-          draggable="line.draggable"
-          icons='line.icons'>
+          ng-repeat="vehicle in vehicles"
+          path="vehicle.coordinates"
+          stroke="vehicle.stroke"
+          visible="vehicle.visible"
+          fit="false"
+          icons="vehicle.icons">
         </ui-gmap-polyline>
         <ui-gmap-markers
-          models="markers()"
+          ng-repeat="vehicle in vehicles"
+          ng-if="vehicle.showOnDate === true"
+          models="vehicle.coordinates"
           coords="'self'"
           icon="'icon'">
         </ui-gmap-markers>
@@ -61,14 +86,15 @@
         <br><br>
       </div>
         <div
-          ng-repeat="line in polylines">
+          ng-repeat="vehicle in vehicles">
           <div>
             <button
               type="button"
               class="btn btn-block"
-              ng-click="toggleMobile(line)"
-              ng-style="{'background-color': line.visible === true? line.stroke.color : '#635a4e'}">
-              {{line.id}}
+              ng-click="toggleMobile(vehicle)"
+              ng-if="vehicle.showOnDate === true"
+              ng-style="{'background-color': vehicle.visible === true? vehicle.stroke.color : '#635a4e'}">
+              {{vehicle.id}}
             </button>
           </div>
           <br>

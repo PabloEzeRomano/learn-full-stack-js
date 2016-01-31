@@ -17,9 +17,10 @@ import thunk              from 'redux-thunk';
 import moment             from 'moment';
 import angularUiGrid      from './../node_modules/angular-ui-grid/ui-grid';
 import formly             from './../node_modules/angular-formly/dist/formly';
-import lodash             from './../node_modules/lodash/lodash'
-import simpleLogger       from './../node_modules/angular-simple-logger/dist/index'
-import googleMapsApi      from './../node_modules/angular-google-maps/dist/angular-google-maps'
+import lodash             from './../node_modules/lodash/lodash';
+import simpleLogger       from './../node_modules/angular-simple-logger/dist/index';
+import googleMapsApi      from './../node_modules/angular-google-maps/dist/angular-google-maps';
+import dateTimePicker     from './../node_modules/angularjs-datetime-picker/angularjs-datetime-picker';
 
 import routerConfig       from './index.config';
 
@@ -29,9 +30,10 @@ if (ON_TEST) {
   require('angular-mocks/angular-mocks');
 }
 
-const bootstrapCss = require('../node_modules/bootstrap/dist/css/bootstrap.min.css');
-const uiGridCss    = require('../node_modules/angular-ui-grid/ui-grid.css');
-const formlyCss    = require('../node_modules/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap');
+const bootstrapCss      = require('../node_modules/bootstrap/dist/css/bootstrap.min.css');
+const uiGridCss         = require('../node_modules/angular-ui-grid/ui-grid.css');
+const formlyCss         = require('../node_modules/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap');
+const dateTimePickerCss = require('../node_modules/angularjs-datetime-picker/angularjs-datetime-picker.css');
 
 const logger = createLogger({
   level: 'info',
@@ -44,6 +46,7 @@ const ngModule = angular.module('app', [
   'ui.bootstrap',
   'ui.grid',
   'uiGmapgoogle-maps',
+  'angularjs-datetime-picker',
   ngRedux,
   ngReduxRouter,
   'formly',
