@@ -23,7 +23,10 @@ var config = {
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
-      moment : "moment"
+      moment : "moment",
+      tinycolor : "tinycolor2",
+      datetimepicker :"eonasdan-bootstrap-datetimepicker",
+      robustPointInPolygon : "robust-point-in-polygon"
     }),
     new webpack.DefinePlugin({
       ON_TEST : process.env.NODE_ENV === 'test'

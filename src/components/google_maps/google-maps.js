@@ -16,10 +16,10 @@ export default ngModule => {
     return {
       restrict: 'E',
       scope: {
-        map       : '&',
-        polylines : '=',
-        markers   : '&',
-        options   : '&'
+        zones    : '&',
+        mobiles  : '&',
+        map      : '&',
+        options  : '&'
       },
       replace: true,
       template: template,
@@ -28,57 +28,163 @@ export default ngModule => {
 
           uiGmapGoogleMapApi.then(function () {
 
-            scope.polylines.forEach((line) => {
-              line.visible = true;
-              line.icons   = [{
+            scope.mobiles().forEach((mobile) => {
+              mobile.visible = true;
+              mobile.icons   = [{
                 icon: {
                   path: google.maps.SymbolPath.FORWARD_OPEN_ARROW
                 },
                 offset: '25px',
                 repeat: '70px'
               }];
-              line.stroke = {};
-              line.stroke.weight = 5;
-              line.stroke.color = scope.randomColorGenerator();
+              mobile.stroke = {};
+              mobile.stroke.weight = 5;
+              mobile.stroke.color = scope.randomColorGenerator();
+            });
+
+            scope.zones().forEach((zone) => {
+              zone.visible = true;
+              zone.stroke = {};
+              zone.stroke.weight = 5;
+              zone.stroke.color = scope.randomColorGenerator();
+              zone.fill = {};
+              zone.fill.color = zone.stroke.color;
+              zone.fill.opacity = 0.5;
+            });
+
+            scope.zones().forEach((zone) => {
+              scope.mobiles().forEach((mobile) => {
+                mobile.coordinates.forEach((coordinate) => {
+
+                  let pointInPoly = robustPointInPolygon;
+                  if ((pointInPoly(zone.coordinates,[coordinate.latitude, coordinate.longitude])) === -1){
+                    console.log('adentro',(pointInPoly(zone.coordinates,[coordinate.latitude, coordinate.longitude])));
+                  } else {
+                    console.log('afuera', (pointInPoly(zone.coordinates,[coordinate.latitude, coordinate.longitude])));
+                  }
+                })
+              })
             });
           });
 
-          scope.toggleMobile = (line)=> {
-           scope.polylines.find( (polyline) => {
-             if(polyline === line) {
-               polyline.visible = !polyline.visible;
-             }
-           })
+
+
+          //var classifyPoint = require('./../../../node_modules/point-in-polygon/index');
+          //var polygon = [ [ 1, 1 ], [ 1, 2 ], [ 2, 2 ], [ 2, 1 ] ];
+          //
+          //console.log(
+          //  classifyPoint(polygon, [1.5, 1.5]),
+          //  classifyPoint(polygon, [1, 2]),
+          //  classifyPoint(polygon, [100000, 10000]));
+          //
+          //
+          var classifyPoints = require('./../../../node_modules/robust-point-in-polygon/robust-pnp');
+          var polygons = [ [ -27.472850, -58.820296 ], [-27.472065, -58.820194], [ -27.471974, -58.820977 ], [  -27.472698, -58.821085] ];
+
+          console.log(
+            classifyPoints(polygons, [-27.472498,-58.820612]),
+            classifyPoints(polygons, [-27.472508, -58.820390]),
+            classifyPoints(polygons, [-27.472567, -58.819907]));
+
+          scope.toggleMobile = (mobile)=> {
+            scope.mobiles().find( (mobileChange) => {
+              if(mobileChange === mobile) {
+                mobile.visible = !mobile.visible;
+              }
+            })
           };
+
+          scope.toggleZone = (zone)=> {
+            scope.zones().find( (zoneChange) => {
+              if(zoneChange === zone) {
+                zone.visible = !zone.visible;
+              }
+            })
+          };
+
+          scope.initialDateTime = moment().format('DD/MM/YYYY 00:00');
+
+          scope.endDateTime = moment().format('DD/MM/YYYY 23:59');
 
           scope.randomColorGenerator = () => {
             let chars = '0123456789ABCDEF'.split('');
-            let color = '#';
+            let hexColor = '#';
             for (let i = 0; i < 6; i++ ) {
-              color += chars[Math.floor(Math.random() * 16)];
+              hexColor += chars[Math.floor(Math.random() * 16)];
+            }
+            var color = tinycolor(hexColor);
+            if (color.isDark()) {
+              color.setAlpha(.5);
             }
             return color;
           };
 
           scope.selectAllMobiles = () => {
-              scope.polylines.forEach( (line) => {
-                line.visible = true;
-              })
-          };
-
-          scope.deselectAllMobiles = () => {
-            scope.polylines.forEach( (line) => {
-              line.visible = false;
+            scope.mobiles().forEach( (mobile) => {
+                mobile.visible = true;
             })
           };
 
-          scope.hideMenu = false;
+          scope.deselectAllMobiles = () => {
+            scope.mobiles().forEach( (mobile) => {
+              mobile.visible = false;
+            })
+          };
 
-          scope.toggleMenu = () => {
-            scope.hideMenu = !scope.hideMenu;
+          scope.selectAllZones = () => {
+            scope.zones().forEach( (zone) => {
+              zone.visible = true;
+            })
+          };
+
+          scope.deselectAllZones = () => {
+            scope.zones().forEach( (zone) => {
+              zone.visible = false;
+            })
+          };
+
+          $(function () {
+            $('#datetimepicker1').datetimepicker({
+              locale : 'es',
+              sideBySide : true,
+              defaultDate: moment().format('DD/MM/YYYY 00:00')
+            });
+            $('#datetimepicker2').datetimepicker({
+              locale : 'es',
+              sideBySide : true,
+              defaultDate : moment().format('DD/MM/YYYY 23:59')
+            });
+            $("#datetimepicker1").on("dp.change", function (e) {
+              $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+            });
+            $("#datetimepicker2").on("dp.change", function (e) {
+              $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
+            });
+          });
+
+          scope.hideMobileMenu = false;
+
+          scope.hideMobileMenu = setTimeout(function () {
+            scope.hideMobileMenu = true;
+          }, 500);
+
+          scope.toggleMobileMenu = () => {
+            scope.hideMobileMenu = !scope.hideMobileMenu;
+          };
+
+          scope.hideZoneMenu = false;
+
+          scope.hideZoneMenu = setTimeout(function () {
+            scope.hideZoneMenu = true;
+          }, 500);
+
+          scope.toggleZoneMenu = () => {
+            scope.hideZoneMenu = !scope.hideZoneMenu;
           }
         }
       }
     }
   });
+
+
 };

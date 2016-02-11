@@ -1,16 +1,35 @@
 <div>
-  <div class="col-xs-offset-5">
-    <button
-      class="btn btn-primary"
-      ng-click="toggleMenu()">
-      <span ng-if="!hideMenu">Ocultar menu de moviles</span>
-      <span ng-if="hideMenu">Mostrar menu de moviles</span>
-    </button>
+  <div>
+    <div class="col-xs-offset-5">
+      <button
+        class="btn btn-primary"
+        ng-click="toggleMobileMenu()">
+        <span ng-if="hideMobileMenu">Ocultar menu de moviles</span>
+        <span ng-if="!hideMobileMenu">Mostrar menu de moviles</span>
+      </button>
+    </div>
+    <br>
+    <div class="col-xs-6">
+      Elija inicio de la busqueda:
+      <input
+        type='text'
+        class="form-control"
+        id='datetimepicker1'
+        ng-model="initialDateTime"/>
+    </div>
+    <div class="col-xs-6">
+      Elija fin de la busqueda:
+      <input
+        type='text'
+        class="form-control"
+        id='datetimepicker2'
+        ng-model="endDateTime"/>
+    </div>
   </div>
-  <br><br>
+    <br><br>
   <div >
     <div
-      ng-class="!hideMenu ? 'col-xs-8' : 'col-xs-12'">
+      ng-class="hideMobileMenu && hideZoneMenu ? 'col-xs-8' : 'col-xs-12'">
       <ui-gmap-google-map
         center="map().center"
         zoom="map().zoom"
@@ -19,26 +38,34 @@
         bounds="map().bounds"
         id="map_canvas">
         <ui-gmap-polyline
-          ng-repeat="line in polylines"
-          path="line.path"
-          stroke="line.stroke"
-          visible='line.visible'
-          geodesic='line.geodesic'
-          fit="true"
-          editable="line.editable"
-          draggable="line.draggable"
-          icons='line.icons'>
+          ng-repeat="mobile in mobiles() | sarDateFilter:initialDateTime:endDateTime"
+          path="mobile.coordinates"
+          stroke="mobile.stroke"
+          visible="mobile.visible"
+          fit="false"
+          icons="mobile.icons">
         </ui-gmap-polyline>
         <ui-gmap-markers
-          models="markers()"
+          ng-repeat="mobile in mobiles()"
+          ng-if="mobile.visible"
+          models="mobile.coordinates"
           coords="'self'"
           icon="'icon'">
         </ui-gmap-markers>
+        <ui-gmap-polygon
+          static="true"
+          ng-repeat="zone in zones()"
+          path="zone.coordinates"
+          stroke="zone.stroke"
+          visible="zone.visible"
+          fill="zone.fill"
+          fit="false">
+        </ui-gmap-polygon>
       </ui-gmap-google-map>
     </div>
     <div
       class="col-xs-4"
-      ng-show="!hideMenu">
+      ng-show="hideMobileMenu">
       <div>
        <div>
          <div class="col-xs-6">
@@ -61,18 +88,31 @@
         <br><br>
       </div>
         <div
-          ng-repeat="line in polylines">
+          ng-repeat="mobile in mobiles() | sarDateFilter:initialDateTime:endDateTime"
+          ng-class="hideZoneMenu ? 'col-xs-6' : 'col-xs-12'">
           <div>
             <button
               type="button"
-              class="btn btn-block"
-              ng-click="toggleMobile(line)"
-              ng-style="{'background-color': line.visible === true? line.stroke.color : '#635a4e'}">
-              {{line.id}}
+              class="btn btn-block btn-xs btn-group"
+              ng-click="toggleMobile(mobile)"
+              ng-style="{'background-color': mobile.visible === true? mobile.stroke.color : '#635a4e'}">
+              {{mobile.id}}
             </button>
           </div>
-          <br>
         </div>
+      <div
+        ng-repeat="zone in zones()"
+        ng-class="hideMobileMenu ? 'col-xs-6' : 'col-xs-12'">
+        <div>
+          <button
+            type="button"
+            class="btn btn-block btn-xs"
+            ng-click="toggleZone(zone)"
+            ng-style="{'background-color': zone.visible === true? zone.stroke.color : '#635a4e'}">
+            Zona {{zone.id}}
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
