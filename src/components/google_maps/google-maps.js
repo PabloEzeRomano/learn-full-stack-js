@@ -71,31 +71,17 @@ export default ngModule => {
           });
 
           $(function () {
-            //$("#datetimepicker1").on("dp.change", function() {
-            //
-            //  $scope.selecteddate = $("#datetimepicker").val();
-            //  alert("selected date is " + $scope.selecteddate);
-            //
-            //});
-            //$("#datetimepicker2").on("dp.change", function() {
-            //
-            //  $scope.selecteddate = $("#datetimepicker").val();
-            //  alert("selected date is " + $scope.selecteddate);
 
-            //});
-            scope.initialDateTime = moment().format('DD/01/YYYY 0:00');
-
-            scope.endDateTime = moment().format('DD/MM/YYYY 23:59');
 
             $('#datetimepicker1').datetimepicker({
               locale : 'es',
               sideBySide : true,
-              defaultDate: scope.initialDateTime
+              defaultDate: moment().format('DD/MM/YYYY 00:00')
             });
             $('#datetimepicker2').datetimepicker({
               locale : 'es',
               sideBySide : true,
-              defaultDate : scope.endDateTime
+              defaultDate : moment().format('DD/MM/YYYY 23:59')
             });
             $("#datetimepicker1").on("dp.change", function (e) {
               $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
@@ -226,7 +212,7 @@ export default ngModule => {
               var dayToCheck = new Date(date).setHours(0,0,0,0);
 
               for (var i = 0; i < scope.events.length; i++) {
-                var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+                var currentDay = new Date(scope.events[i].date).setHours(0,0,0,0);
 
                 if (dayToCheck === currentDay) {
                   return scope.events[i].status;
