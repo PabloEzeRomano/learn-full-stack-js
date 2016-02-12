@@ -53,38 +53,57 @@ export default ngModule => {
             });
 
             scope.zones().forEach((zone) => {
+              var zoneToArray = [];
+              zoneToArray = zone.coordinates.map ((coordinate) => {
+                return [coordinate.latitude, coordinate.longitude]
+              });
               scope.mobiles().forEach((mobile) => {
                 mobile.coordinates.forEach((coordinate) => {
-
                   let pointInPoly = robustPointInPolygon;
-                  if ((pointInPoly(zone.coordinates,[coordinate.latitude, coordinate.longitude])) === -1){
-                    console.log('adentro',(pointInPoly(zone.coordinates,[coordinate.latitude, coordinate.longitude])));
+                  if ((pointInPoly(zoneToArray,[coordinate.latitude, coordinate.longitude])) === -1){
+                    console.log('adentro',(pointInPoly(zoneToArray,[coordinate.latitude, coordinate.longitude])));
                   } else {
-                    console.log('afuera', (pointInPoly(zone.coordinates,[coordinate.latitude, coordinate.longitude])));
+                    console.log('afuera', (pointInPoly(zoneToArray,[coordinate.latitude, coordinate.longitude])));
                   }
                 })
               })
             });
           });
 
+          $(function () {
+            //$("#datetimepicker1").on("dp.change", function() {
+            //
+            //  $scope.selecteddate = $("#datetimepicker").val();
+            //  alert("selected date is " + $scope.selecteddate);
+            //
+            //});
+            //$("#datetimepicker2").on("dp.change", function() {
+            //
+            //  $scope.selecteddate = $("#datetimepicker").val();
+            //  alert("selected date is " + $scope.selecteddate);
 
+            //});
+            scope.initialDateTime = moment().format('DD/01/YYYY 0:00');
 
-          //var classifyPoint = require('./../../../node_modules/point-in-polygon/index');
-          //var polygon = [ [ 1, 1 ], [ 1, 2 ], [ 2, 2 ], [ 2, 1 ] ];
-          //
-          //console.log(
-          //  classifyPoint(polygon, [1.5, 1.5]),
-          //  classifyPoint(polygon, [1, 2]),
-          //  classifyPoint(polygon, [100000, 10000]));
-          //
-          //
-          var classifyPoints = require('./../../../node_modules/robust-point-in-polygon/robust-pnp');
-          var polygons = [ [ -27.472850, -58.820296 ], [-27.472065, -58.820194], [ -27.471974, -58.820977 ], [  -27.472698, -58.821085] ];
+            scope.endDateTime = moment().format('DD/MM/YYYY 23:59');
 
-          console.log(
-            classifyPoints(polygons, [-27.472498,-58.820612]),
-            classifyPoints(polygons, [-27.472508, -58.820390]),
-            classifyPoints(polygons, [-27.472567, -58.819907]));
+            $('#datetimepicker1').datetimepicker({
+              locale : 'es',
+              sideBySide : true,
+              defaultDate: scope.initialDateTime
+            });
+            $('#datetimepicker2').datetimepicker({
+              locale : 'es',
+              sideBySide : true,
+              defaultDate : scope.endDateTime
+            });
+            $("#datetimepicker1").on("dp.change", function (e) {
+              $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+            });
+            $("#datetimepicker2").on("dp.change", function (e) {
+              $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
+            });
+          });
 
           scope.toggleMobile = (mobile)=> {
             scope.mobiles().find( (mobileChange) => {
@@ -102,9 +121,18 @@ export default ngModule => {
             })
           };
 
-          scope.initialDateTime = moment().format('DD/MM/YYYY 00:00');
 
-          scope.endDateTime = moment().format('DD/MM/YYYY 23:59');
+
+          scope.initPopUp = function() {
+            scope.initDate.opened = true;
+          };
+
+          scope.dateOptions = {
+            formatYear : 'yyyy',
+            formatMont : 'MM',
+            formatDay : 'dd',
+            startingDay : 1
+          };
 
           scope.randomColorGenerator = () => {
             let chars = '0123456789ABCDEF'.split('');
@@ -143,48 +171,74 @@ export default ngModule => {
             })
           };
 
-          $(function () {
-            $('#datetimepicker1').datetimepicker({
-              locale : 'es',
-              sideBySide : true,
-              defaultDate: moment().format('DD/MM/YYYY 00:00')
-            });
-            $('#datetimepicker2').datetimepicker({
-              locale : 'es',
-              sideBySide : true,
-              defaultDate : moment().format('DD/MM/YYYY 23:59')
-            });
-            $("#datetimepicker1").on("dp.change", function (e) {
-              $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
-            });
-            $("#datetimepicker2").on("dp.change", function (e) {
-              $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
-            });
-          });
-
           scope.hideMobileMenu = false;
-
-          scope.hideMobileMenu = setTimeout(function () {
-            scope.hideMobileMenu = true;
-          }, 500);
+          scope.hideZoneMenu = false;
+          scope.hideBothMenu = true;
 
           scope.toggleMobileMenu = () => {
             scope.hideMobileMenu = !scope.hideMobileMenu;
+            if (!scope.hideMobileMenu && !scope.hideZoneMenu) {
+              scope.hideBothMenu = true;
+            } else {
+              scope.hideBothMenu = false;
+            }
           };
-
-          scope.hideZoneMenu = false;
-
-          scope.hideZoneMenu = setTimeout(function () {
-            scope.hideZoneMenu = true;
-          }, 500);
-
           scope.toggleZoneMenu = () => {
             scope.hideZoneMenu = !scope.hideZoneMenu;
-          }
+            if (!scope.hideMobileMenu && !scope.hideZoneMenu) {
+              scope.hideBothMenu = true;
+            } else {
+              scope.hideBothMenu = false;
+            }
+          };
+
+          setTimeout(function () {
+            scope.toggleMobileMenu();
+            scope.toggleZoneMenu();
+            console.log('asdagfas')
+          }, 500);
+
+          // Disable weekend selection
+          scope.disabled = function(date, mode) {
+            return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+          };
+
+          scope.popUpDate = function() {
+            scope.popup.opened = true;
+          };
+
+          scope.dateOptions = {
+            formatYear : 'yyyy',
+            formatMont : 'MM',
+            formatDay  : 'dd',
+            startingDay: 1
+          };
+
+          scope.format = 'dd/MM/yyyy HH:mm';
+          scope.altInputFormats = ['M!/d!/yyyy'];
+
+          scope.popup = {
+            opened: false
+          };
+
+          scope.getDayClass = function(date, mode) {
+            if (mode === 'day') {
+              var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+              for (var i = 0; i < scope.events.length; i++) {
+                var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+                if (dayToCheck === currentDay) {
+                  return scope.events[i].status;
+                }
+              }
+            }
+
+            return '';
+          };
+
         }
       }
     }
   });
-
-
 };

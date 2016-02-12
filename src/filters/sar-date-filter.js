@@ -8,13 +8,15 @@ export default ngModule => {
     return function (mobiles, initDate, endDate) {
 
       var includeMobile = null;
+      var mInitDate = moment(initDate,'DD/MM/YYYY HH:mm');
+      var mEndDate = moment(endDate,'DD/MM/YYYY HH:mm');
 
       return mobiles.filter( (mobile) => {
         includeMobile = false;
+
         mobile.coordinates.forEach ( (coordinates) => {
-          console.log('date',typeof initDate);
-          console.log(typeof coordinates.timestamp);
-          if ((moment(coordinates.timestamp).isBetween(initDate, endDate))) {
+          var timestamp = moment(coordinates.timestamp,'DD/MM/YYYY HH:mm');
+          if (timestamp.isBetween(mInitDate, mEndDate)) {
 
             includeMobile = true;
 

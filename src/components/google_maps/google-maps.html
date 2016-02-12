@@ -1,35 +1,48 @@
 <div>
   <div>
-    <div class="col-xs-offset-5">
-      <button
-        class="btn btn-primary"
-        ng-click="toggleMobileMenu()">
-        <span ng-if="hideMobileMenu">Ocultar menu de moviles</span>
-        <span ng-if="!hideMobileMenu">Mostrar menu de moviles</span>
-      </button>
+    <div>
+      <div class="col-xs-offset-4">
+        <button
+          class="btn btn-primary"
+          ng-click="toggleMobileMenu()">
+          <span ng-if="hideMobileMenu">Ocultar menu de moviles</span>
+          <span ng-if="!hideMobileMenu">Mostrar menu de moviles</span>
+        </button>
+
+        <button
+          class="btn btn-primary"
+          ng-click="toggleZoneMenu()">
+          <span ng-if="hideZoneMenu">Ocultar menu de zonas</span>
+          <span ng-if="!hideZoneMenu">Mostrar menu de zonas</span>
+        </button>
+      </div>
     </div>
     <br>
-    <div class="col-xs-6">
+    <div
+      class="col-xs-6"
+      ng-model="initialDateTime">
       Elija inicio de la busqueda:
       <input
         type='text'
         class="form-control"
-        id='datetimepicker1'
-        ng-model="initialDateTime"/>
+        id='datetimepicker1'/>
+      {{initialDateTime}}
     </div>
-    <div class="col-xs-6">
+    <div
+      class="col-xs-6"
+      ng-model="endDateTime">
       Elija fin de la busqueda:
       <input
         type='text'
         class="form-control"
         id='datetimepicker2'
-        ng-model="endDateTime"/>
+        />{{endDateTime}}
     </div>
   </div>
-    <br><br>
+  <br><br>
   <div >
     <div
-      ng-class="hideMobileMenu && hideZoneMenu ? 'col-xs-8' : 'col-xs-12'">
+      ng-class="hideBothMenu ? 'col-xs-12' : 'col-xs-8'">
       <ui-gmap-google-map
         center="map().center"
         zoom="map().zoom"
@@ -64,53 +77,77 @@
       </ui-gmap-google-map>
     </div>
     <div
-      class="col-xs-4"
-      ng-show="hideMobileMenu">
-      <div>
-       <div>
-         <div class="col-xs-6">
-           <button
-             class="btn btn-primary"
-             type="button"
-             ng-click="selectAllMobiles()">
-             <span>Seleccionar todos</span>
-           </button>
-         </div >
-         <div class="col-xs-6">
-           <button
-             class="btn btn-primary"
-             type="button"
-             ng-click="deselectAllMobiles()">
-             <span>Deseleccionar todos</span>
-           </button>
-         </div>
-       </div>
-        <br><br>
-      </div>
-        <div
-          ng-repeat="mobile in mobiles() | sarDateFilter:initialDateTime:endDateTime"
-          ng-class="hideZoneMenu ? 'col-xs-6' : 'col-xs-12'">
+      class="col-xs-4">
+      <div class="col-xs-6"></div>
+      <div class="col-xs-6">
+        <div ng-show="hideMobileMenu">
           <div>
-            <button
-              type="button"
-              class="btn btn-block btn-xs btn-group"
-              ng-click="toggleMobile(mobile)"
-              ng-style="{'background-color': mobile.visible === true? mobile.stroke.color : '#635a4e'}">
-              {{mobile.id}}
-            </button>
+            <div>
+              <div >
+                <button
+                  class="btn btn-block btn-xs btn-primary"
+                  type="button"
+                  ng-click="selectAllMobiles()">
+                  <span>Seleccionar autos</span>
+                </button>
+              </div >
+              <div>
+                <button
+                  class="btn btn-block btn-xs btn-primary"
+                  type="button"
+                  ng-click="deselectAllMobiles()">
+                  <span>Deseleccionar autos</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            ng-repeat="mobile in mobiles() | sarDateFilter:initialDateTime:endDateTime">
+            <div>
+              <button
+                type="button"
+                class="btn btn-block btn-xs btn-group"
+                ng-click="toggleMobile(mobile)"
+                ng-style="{'background-color': mobile.visible === true? mobile.stroke.color : '#635a4e'}">
+                {{mobile.id}}
+              </button>
+            </div>
           </div>
         </div>
-      <div
-        ng-repeat="zone in zones()"
-        ng-class="hideMobileMenu ? 'col-xs-6' : 'col-xs-12'">
-        <div>
-          <button
-            type="button"
-            class="btn btn-block btn-xs"
-            ng-click="toggleZone(zone)"
-            ng-style="{'background-color': zone.visible === true? zone.stroke.color : '#635a4e'}">
-            Zona {{zone.id}}
-          </button>
+
+        <div ng-show="hideZoneMenu">
+          <div>
+            <div>
+              <div>
+                <button
+                  class="btn btn-block btn-xs btn-primary"
+                  type="button"
+                  ng-click="selectAllZones()">
+                  <span>Seleccionar zonas</span>
+                </button>
+              </div >
+              <div>
+                <button
+                  class="btn btn-block btn-xs btn-primary"
+                  type="button"
+                  ng-click="deselectAllZones()">
+                  <span>Deseleccionar zonas</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            ng-repeat="zone in zones()">
+            <div>
+              <button
+                type="button"
+                class="btn btn-block btn-xs"
+                ng-click="toggleZone(zone)"
+                ng-style="{'background-color': zone.visible === true? zone.stroke.color : '#635a4e'}">
+                Zona {{zone.id}}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

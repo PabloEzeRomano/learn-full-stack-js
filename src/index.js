@@ -21,9 +21,8 @@ import lodash               from './../node_modules/lodash/lodash';
 import simpleLogger         from './../node_modules/angular-simple-logger/dist/index';
 import googleMapsApi        from './../node_modules/angular-google-maps/dist/angular-google-maps';
 import tinycolor            from './../node_modules/tinycolor2/tinycolor';
-import datetimepicker       from './../node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min'
-import robustPointInPolygon from './../node_modules/robust-point-in-polygon/robust-pnp'
-
+import robustPointInPolygon from './../node_modules/robust-point-in-polygon/robust-pnp';
+import datetimepicker       from './../node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min';
 
 import routerConfig       from './index.config';
 
