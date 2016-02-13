@@ -149,10 +149,6 @@ export default ngModule => {
             scope.toggleZoneMenu();
           }, 500);
 
-          scope.initialDateTime = moment().format('DD/01/YYYY');
-
-          scope.endDateTime = moment().format('DD/MM/YYYY');
-
           scope.openInitDate = function() {
             scope.initDatePopUp.opened = true;
           };
@@ -169,6 +165,40 @@ export default ngModule => {
 
           scope.endDatePopUp = {
             opened: false
+          };
+
+          scope.hourStep = 1;
+          scope.minuteStep = 15;
+
+          scope.timeOptions = {
+            hourStep   : [1, 2, 3],
+            minuteStep : [1, 5, 10, 15, 25, 30]
+          };
+
+          scope.ismeridian = true;
+
+          scope.initialTime = new Date();
+
+          scope.endTime = new Date();
+
+          scope.initialDate = new Date();
+
+          scope.endDate = new Date();
+
+          setTimeout( () => {
+            console.log('initial date',scope.initialDate);
+          }, 5000);
+
+          scope.buildDate = (date, time) => {
+            let assembledDate = new Date();
+            assembledDate.setFullYear(date.getFullYear());
+            assembledDate.setMonth(date.getMonth());
+            assembledDate.setDate(date.getDate());
+            assembledDate.setHours(time.getHours());
+            assembledDate.setMinutes(time.getMinutes());
+
+            return moment(assembledDate).format('DD/MM/YYYY HH:mm');
+
           };
 
         }
