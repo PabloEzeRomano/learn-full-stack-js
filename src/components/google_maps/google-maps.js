@@ -70,27 +70,6 @@ export default ngModule => {
             });
           });
 
-          $(function () {
-
-
-            $('#datetimepicker1').datetimepicker({
-              locale : 'es',
-              sideBySide : true,
-              defaultDate: moment().format('DD/MM/YYYY 00:00')
-            });
-            $('#datetimepicker2').datetimepicker({
-              locale : 'es',
-              sideBySide : true,
-              defaultDate : moment().format('DD/MM/YYYY 23:59')
-            });
-            $("#datetimepicker1").on("dp.change", function (e) {
-              $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
-            });
-            $("#datetimepicker2").on("dp.change", function (e) {
-              $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
-            });
-          });
-
           scope.toggleMobile = (mobile)=> {
             scope.mobiles().find( (mobileChange) => {
               if(mobileChange === mobile) {
@@ -105,19 +84,6 @@ export default ngModule => {
                 zone.visible = !zone.visible;
               }
             })
-          };
-
-
-
-          scope.initPopUp = function() {
-            scope.initDate.opened = true;
-          };
-
-          scope.dateOptions = {
-            formatYear : 'yyyy',
-            formatMont : 'MM',
-            formatDay : 'dd',
-            startingDay : 1
           };
 
           scope.randomColorGenerator = () => {
@@ -181,46 +147,28 @@ export default ngModule => {
           setTimeout(function () {
             scope.toggleMobileMenu();
             scope.toggleZoneMenu();
-            console.log('asdagfas')
           }, 500);
 
-          // Disable weekend selection
-          scope.disabled = function(date, mode) {
-            return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+          scope.initialDateTime = moment().format('DD/01/YYYY');
+
+          scope.endDateTime = moment().format('DD/MM/YYYY');
+
+          scope.openInitDate = function() {
+            scope.initDatePopUp.opened = true;
           };
 
-          scope.popUpDate = function() {
-            scope.popup.opened = true;
+          scope.openEndDate = function() {
+            scope.endDatePopUp.opened = true;
           };
 
-          scope.dateOptions = {
-            formatYear : 'yyyy',
-            formatMont : 'MM',
-            formatDay  : 'dd',
-            startingDay: 1
-          };
+          scope.format = 'dd/MM/yyyy';
 
-          scope.format = 'dd/MM/yyyy HH:mm';
-          scope.altInputFormats = ['M!/d!/yyyy'];
-
-          scope.popup = {
+          scope.initDatePopUp = {
             opened: false
           };
 
-          scope.getDayClass = function(date, mode) {
-            if (mode === 'day') {
-              var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-              for (var i = 0; i < scope.events.length; i++) {
-                var currentDay = new Date(scope.events[i].date).setHours(0,0,0,0);
-
-                if (dayToCheck === currentDay) {
-                  return scope.events[i].status;
-                }
-              }
-            }
-
-            return '';
+          scope.endDatePopUp = {
+            opened: false
           };
 
         }

@@ -91,7 +91,7 @@ export default ngModule => {
 
           scope.mobiles = [
             {
-              id : 'Movil 1',
+              id : '1',
               coordinates : [
                 {
                   id : 1,
@@ -144,7 +144,7 @@ export default ngModule => {
               ]
             },
             {
-              id : 'Movil 2',
+              id : '2',
               coordinates : [
                 {
                   id : 1,
@@ -168,7 +168,7 @@ export default ngModule => {
               ]
             },
             {
-              id : 'Movil 3',
+              id : '3',
               coordinates : [
                 {
                   id : 1,
@@ -191,7 +191,7 @@ export default ngModule => {
               ]
             },
             {
-              id : 'Movil 4',
+              id : '4',
               coordinates : [
                 {
                   id : 1,
@@ -214,7 +214,7 @@ export default ngModule => {
               ]
             },
             {
-              id : 'Movil 5',
+              id : '5',
               coordinates : [
                 {
                   id : 1,
@@ -243,7 +243,7 @@ export default ngModule => {
               ]
             },
             {
-              id : 'Movil 6',
+              id : '6',
               coordinates : [
                 {
                   id : 1,
@@ -266,7 +266,7 @@ export default ngModule => {
               ]
             },
             {
-              id : 'Movil 7',
+              id : '7',
               coordinates : [
                 {
                   id : 1,
