@@ -51,24 +51,8 @@ export default ngModule => {
               zone.fill.color = zone.stroke.color;
               zone.fill.opacity = 0.5;
             });
-
-            scope.zones().forEach((zone) => {
-              var zoneToArray = [];
-              zoneToArray = zone.coordinates.map ((coordinate) => {
-                return [coordinate.latitude, coordinate.longitude]
-              });
-              scope.mobiles().forEach((mobile) => {
-                mobile.coordinates.forEach((coordinate) => {
-                  let pointInPoly = robustPointInPolygon;
-                  if ((pointInPoly(zoneToArray,[coordinate.latitude, coordinate.longitude])) === -1){
-                    console.log('adentro',(pointInPoly(zoneToArray,[coordinate.latitude, coordinate.longitude])));
-                  } else {
-                    console.log('afuera', (pointInPoly(zoneToArray,[coordinate.latitude, coordinate.longitude])));
-                  }
-                })
-              })
-            });
           });
+
 
           scope.toggleMobile = (mobile)=> {
             scope.mobiles().find( (mobileChange) => {
@@ -198,8 +182,11 @@ export default ngModule => {
             assembledDate.setMinutes(time.getMinutes());
 
             return moment(assembledDate).format('DD/MM/YYYY HH:mm');
-
           };
+
+          scope.mobileFilter = 'sarDateFilter:buildDate(initialDate, initialTime):buildDate(endDate, endTime)'
+
+
 
         }
       }

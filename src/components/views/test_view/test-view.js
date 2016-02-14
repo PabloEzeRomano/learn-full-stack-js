@@ -49,7 +49,8 @@ export default ngModule => {
                   longitude: -58.820307
                 }
               ]
-            },{
+            },
+            {
               id: 2,
               coordinates: [
                 {
@@ -84,6 +85,23 @@ export default ngModule => {
                 {
                   latitude: -27.472698,
                   longitude: -58.821085
+                }
+              ]
+            },
+            {
+              id: 4,
+              coordinates: [
+                {
+                  latitude: -27.473857,
+                  longitude:  -58.820594
+                },
+                {
+                  latitude: -27.474638,
+                  longitude:  -58.820723
+                },
+                {
+                  latitude: -27.474324,
+                  longitude: -58.819950
                 }
               ]
             }
@@ -287,11 +305,126 @@ export default ngModule => {
                   timestamp : moment().format('31/01/2016 12:17')
                 }
               ]
+            },
+            {
+              id : '8',
+              coordinates : [
+                {
+                  id : 1,
+                  latitude : -27.471807,
+                  longitude : -58.821885,
+                  timestamp : moment().format('02/02/2016 12:15')
+                },
+                {
+                  id : 2,
+                  latitude : -27.472388,
+                  longitude :-58.821927,
+                  timestamp : moment().format('02/02/2016 12:16')
+                },
+                {
+                  id : 3,
+                  latitude : -27.473073,
+                  longitude : -58.821938,
+                  timestamp : moment().format('02/02/2016 12:17')
+                }
+              ]
+            },
+            {
+              id : '9',
+              coordinates : [
+                {
+                  id : 1,
+                  latitude : -27.473625,
+                  longitude :  -58.821155,
+                  timestamp : moment().format('05/02/2016 12:15')
+                },
+                {
+                  id : 2,
+                  latitude : -27.473530,
+                  longitude : -58.822121,
+                  timestamp : moment().format('05/02/2016 12:16')
+                },
+                {
+                  id : 3,
+                  latitude : -27.473414,
+                  longitude : -58.823130,
+                  timestamp : moment().format('05/02/2016 12:17')
+                }
+              ]
+            },
+            {
+              id : '10',
+              coordinates : [
+                {
+                  id : 1,
+                  latitude : -27.472253,
+                  longitude :   -58.823032,
+                  timestamp : moment().format('08/02/2016 12:15')
+                },
+                {
+                  id : 2,
+                  latitude : -27.472301,
+                  longitude : -58.822356,
+                  timestamp : moment().format('08/02/2016 12:16')
+                },
+                {
+                  id : 3,
+                  latitude : -27.472396,
+                  longitude : -58.821454,
+                  timestamp : moment().format('08/02/2016 12:17')
+                }
+              ]
+            },
+            {
+              id : '11',
+              coordinates : [
+                {
+                  id : 1,
+                  latitude : -27.471254,
+                  longitude :  -58.822087,
+                  timestamp : moment().format('08/02/2016 12:15')
+                },
+                {
+                  id : 2,
+                  latitude : -27.471158,
+                  longitude : -58.823010,
+                  timestamp : moment().format('08/02/2016 12:16')
+                },
+                {
+                  id : 3,
+                  latitude : -27.471025,
+                  longitude : -58.823986,
+                  timestamp : moment().format('08/02/2016 12:17')
+                }
+              ]
+            },
+            {
+              id : '12',
+              coordinates : [
+                {
+                  id : 1,
+                  latitude : -27.472586,
+                  longitude :  -58.818890,
+                  timestamp : moment().format('14/02/2016 12:15')
+                },
+                {
+                  id : 2,
+                  latitude : -27.471977,
+                  longitude : -58.818751,
+                  timestamp : moment().format('14/02/2016 12:16')
+                },
+                {
+                  id : 3,
+                  latitude : -27.471311,
+                  longitude : -58.818611,
+                  timestamp : moment().format('14/02/2016 12:17')
+                }
+              ]
             }
           ];
 
           scope.options = {
-            scrollwheel : true
+            scrollwheel : false
           };
 
         }
