@@ -169,10 +169,6 @@ export default ngModule => {
 
           scope.endDate = new Date();
 
-          setTimeout( () => {
-            console.log('initial date',scope.initialDate);
-          }, 5000);
-
           scope.buildDate = (date, time) => {
             let assembledDate = new Date();
             assembledDate.setFullYear(date.getFullYear());
@@ -184,10 +180,10 @@ export default ngModule => {
             return moment(assembledDate).format('DD/MM/YYYY HH:mm');
           };
 
-          scope.mobileFilter = 'sarDateFilter:buildDate(initialDate, initialTime):buildDate(endDate, endTime)'
-
-
-
+          scope.mobileByZone = false;
+          scope.zoneByMobile = false;
+          scope.hideMarkers = false;
+          scope.mobilesInDate = 0;
         }
       }
     }
